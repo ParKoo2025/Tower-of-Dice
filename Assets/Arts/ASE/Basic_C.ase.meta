@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9f74f893fe395a547aaee866626a904b
+guid: d25d9535c8f4eba49bda8bfa626ca60c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Basic_LT
+  - name: Basic_C
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 480
-      height: 540
-    spriteID: cc1fbc212b7c3dd4aa7e2ac814dfad00
+      width: 650
+      height: 710
+    spriteID: 7b246a02ee6b74e49be539fa4efe5cb0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2964522073
+      value0: 906531598
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Basic_LT
+    name: Basic_C
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Basic_LT
+    - name: Basic_C
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 10010
-        y: 10030
-        width: 480
-        height: 540
-      spriteId: cc1fbc212b7c3dd4aa7e2ac814dfad00
+        x: 0
+        y: 0
+        width: 650
+        height: 710
+      spriteId: 7b246a02ee6b74e49be539fa4efe5cb0
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -181,5 +181,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 20000, y: 20000}
-  previousTextureSize: {x: 512, y: 1024}
+  canvasSize: {x: 650, y: 710}
+  previousTextureSize: {x: 1024, y: 1024}

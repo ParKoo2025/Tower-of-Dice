@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f3f20c2e515814340984e260d836e81b
+guid: 41cc909591288544d9de3a50a205a0e0
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -102,7 +102,7 @@ ScriptedImporter:
     generateIndividualEvents: 1
     generateSpriteAtlas: 1
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638892448394963284
+  platformSettingsDirtyTick: 0
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Basic_Tile
+  - name: Basic_LT
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 480
       height: 540
-    spriteID: 2fc7e14dbcc3a41448019f3c4ca44094
+    spriteID: 09163018a85f5bd45a54979393423e02
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2655112549
+      value0: 2964522073
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Basic_Tile
+    name: Basic_LT
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Basic_RT
+    - name: Basic_LT
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,37 +171,13 @@ ScriptedImporter:
         y: 0
         width: 480
         height: 540
-      spriteId: 2fc7e14dbcc3a41448019f3c4ca44094
+      spriteId: 09163018a85f5bd45a54979393423e02
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
     parentIndex: -1
   tileSets: []
-  platformSettings:
-  - name: DefaultTexturePlatform
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 16384
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    ignorePlatformSupport: 0
-    maxTextureSize: 16384
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
+  platformSettings: []
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
