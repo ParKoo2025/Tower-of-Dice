@@ -18,7 +18,7 @@ public class TileGenerator : MonoBehaviour
         go.transform.parent = transform;
         
         // Left RT tiles
-        spawnPosition += new Vector3(-2.5f, 2.9f, 0.0f);
+        spawnPosition += new Vector3(-2.45f, 2.85f, 1.0f);
         Vector3 deltaPosition = new Vector3(-2.0f, 2.0f, 1.0f);
         for (int i = 0; i < 8; i++)
         {
@@ -29,13 +29,13 @@ public class TileGenerator : MonoBehaviour
         }
 
         // left c Tile
-        spawnPosition += new Vector3(-0.5f, 0.9f, 1.0f);
+        spawnPosition += new Vector3(-0.85f, 0.45f, 1.0f);
         go = Instantiate(Resources.Load<GameObject>(BASIC_C_PATH), spawnPosition, Quaternion.identity);
         mTiles.Add(go.GetComponent<Tile>());
         go.transform.parent = transform;
 
         // Left LT Tiles;
-        spawnPosition += new Vector3(2.5f, 2.9f, 1.0f);
+        spawnPosition += new Vector3(2.85f, 2.45f, 1.0f);
         deltaPosition = new Vector3(2.0f, 2.0f, 1.0f);
 
         for (int i = 0; i < 8; i++)
@@ -48,7 +48,7 @@ public class TileGenerator : MonoBehaviour
         
         // Right LT tiles
         spawnPosition = Vector3.zero;
-        spawnPosition += new Vector3(2.5f, 2.9f, 0.0f);
+        spawnPosition += new Vector3(2.45f, 2.85f, 1.0f);
         for (int i = 0; i < 8; i++)
         {
             go = Instantiate(Resources.Load<GameObject>(BASIC_LT_PATH), spawnPosition, Quaternion.identity);
@@ -58,13 +58,13 @@ public class TileGenerator : MonoBehaviour
         }
 
         // Right C Tile
-        spawnPosition += new Vector3(0.5f, 0.9f, 1.0f);
+        spawnPosition += new Vector3(0.85f, 0.45f, 1.0f);
         go = Instantiate(Resources.Load<GameObject>(BASIC_C_PATH), spawnPosition, Quaternion.identity);
         mTiles.Add(go.GetComponent<Tile>());
         go.transform.parent = transform;
 
         // Right RT tile
-        spawnPosition += new Vector3(-2.5f, 2.9f, 1.0f);
+        spawnPosition += new Vector3(-2.85f, 2.45f, 1.0f);
         deltaPosition = new Vector3(-2.0f, 2.0f, 1.0f);
         for (int i = 0; i < 8; i++)
         {
@@ -75,7 +75,7 @@ public class TileGenerator : MonoBehaviour
         }
 
         // Top C tile
-        spawnPosition += new Vector3(-0.5f, 0.9f, 1.0f);
+        spawnPosition += new Vector3(-0.45f, 0.85f, 1.0f);
         go = Instantiate(Resources.Load<GameObject>(BASIC_C_PATH), spawnPosition, Quaternion.identity);
         mTiles.Add(go.GetComponent<Tile>());
         go.transform.parent = transform;
