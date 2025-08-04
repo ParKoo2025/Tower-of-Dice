@@ -18,9 +18,6 @@ public enum ETileStyle
 public class TileUtil : MonoBehaviour
 {
     private static readonly string SPRITE_PATH = "ASE/";    
-    private static readonly string BASIC_C_PATH = "GameObject/Basic_C";
-    private static readonly string BASIC_LT_PATH = "GameObject/Basic_LT";
-    private static readonly string BASIC_RT_PATH = "GameObject/Basic_RT";
 
     private static Dictionary<ETileType, Sprite> _cTileSprites;
     private static Dictionary<ETileType, Sprite> _ltTileSprites;
@@ -53,7 +50,7 @@ public class TileUtil : MonoBehaviour
         
         // bottom C tile
         Vector3 spawnPosition = Vector3.zero;
-        Tile tile = GenerateTile("Bottom C", spawnPosition, ETileStyle.C, ETileType.Basic, parent);
+        Tile tile = GenerateTile("Bottom C", spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Left RT tiles
@@ -61,7 +58,7 @@ public class TileUtil : MonoBehaviour
         Vector3 deltaPosition = new Vector3(-2.0f, 2.0f, 1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Left RT" + (i + 1), spawnPosition, ETileStyle.RT, ETileType.Basic, parent);
+            tile = GenerateTile("Left RT" + (i + 1), spawnPosition, ETileStyle.RT, parent);
             tiles.Add(tile);
             
             spawnPosition += deltaPosition;
@@ -69,7 +66,7 @@ public class TileUtil : MonoBehaviour
 
         // left c Tile
         spawnPosition += new Vector3(-0.85f, 0.45f, 1.0f);
-        tile = GenerateTile("Bottom C", spawnPosition, ETileStyle.C, ETileType.Basic, parent);
+        tile = GenerateTile("Bottom C", spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Left LT Tiles;
@@ -77,7 +74,7 @@ public class TileUtil : MonoBehaviour
         deltaPosition = new Vector3(2.0f, 2.0f, 1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Left LT" + (i + 1), spawnPosition, ETileStyle.LT, ETileType.Basic, parent);
+            tile = GenerateTile("Left LT" + (i + 1), spawnPosition, ETileStyle.LT, parent);
             tiles.Add(tile);
             
             spawnPosition += deltaPosition;
@@ -85,7 +82,7 @@ public class TileUtil : MonoBehaviour
         
         // Top C tile
         spawnPosition += new Vector3(0.45f, 0.85f, 1.0f);
-        tile = GenerateTile("Top C", spawnPosition, ETileStyle.C, ETileType.Basic, parent);
+        tile = GenerateTile("Top C", spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Right RT tile
@@ -93,7 +90,7 @@ public class TileUtil : MonoBehaviour
         deltaPosition = new Vector3(2.0f, -2.0f, -1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Right RT" + (i + 1), spawnPosition, ETileStyle.RT, ETileType.Basic, parent);
+            tile = GenerateTile("Right RT" + (i + 1), spawnPosition, ETileStyle.RT, parent);
             tiles.Add(tile);
 
             spawnPosition += deltaPosition;
@@ -101,7 +98,7 @@ public class TileUtil : MonoBehaviour
         
         // Right C Tile
         spawnPosition += new Vector3(0.85f, -0.45f, -1.0f);
-        tile = GenerateTile("Right C", spawnPosition, ETileStyle.C, ETileType.Basic, parent);
+        tile = GenerateTile("Right C", spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Right LT tiles
@@ -109,7 +106,7 @@ public class TileUtil : MonoBehaviour
         deltaPosition = new Vector3(-2.0f, -2.0f, -1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Right LT" + (i + 1), spawnPosition, ETileStyle.LT, ETileType.Basic, parent);
+            tile = GenerateTile("Right LT" + (i + 1), spawnPosition, ETileStyle.LT, parent);
             tiles.Add(tile);
             
             spawnPosition += deltaPosition;
@@ -142,7 +139,7 @@ public class TileUtil : MonoBehaviour
         return dic;
     }
 
-    private static Tile GenerateTile(string name, Vector3 spawnPosition, ETileStyle eTileStyle, ETileType eTileType, Transform parent)
+    private static Tile GenerateTile(string name, Vector3 spawnPosition, ETileStyle eTileStyle, Transform parent)
     {
         GameObject go = new GameObject(name);
         go.transform.parent = parent;
@@ -151,9 +148,7 @@ public class TileUtil : MonoBehaviour
         go.AddComponent<SpriteRenderer>();
         
         var tile = go.AddComponent<Tile>();
-        tile.ETileStyle = eTileStyle;
-        tile.ETileType = eTileType;
-        tile.SetTileSprite();
+        tile.InitializeTile(eTileStyle);
 
         return tile;
     }

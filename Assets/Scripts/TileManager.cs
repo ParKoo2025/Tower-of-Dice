@@ -64,13 +64,6 @@ public class TileManager : MonoBehaviour
 
         var tileType = playerTile.ETileType;
         
-        // 일단 LT, RT 타일은 Basic으로 갱신
-        if (playerTile.ETileStyle != ETileStyle.C)
-        {
-            playerTile.ETileType = ETileType.Basic;
-            playerTile.SetTileSprite();
-        }
-
         // 밟은 타일이 Treasure Start인 경우
         if (tileType == ETileType.Treasure && TreasureCount == 1)
         {
@@ -89,9 +82,8 @@ public class TileManager : MonoBehaviour
             {
                 if (_tiles[i].ETileType == ETileType.Basic)
                 {
-                    _tiles[i].ETileType = ETileType.Treasure;
+                    _tiles[i].ChangeTile(ETileType.Treasure);
                     print("Treasure 도착 생성");
-                    _tiles[i].SetTileSprite();
                     break;
                 }
             }
@@ -114,7 +106,7 @@ public class TileManager : MonoBehaviour
         List<int> v = new List<int>();
         for (int i = 1; i < 40; i++)
         {
-            if (i % 10 != 0)
+            if (i % 10 != 0 && i != 7)
             {
                 v.Add(i);
             }
@@ -123,25 +115,25 @@ public class TileManager : MonoBehaviour
         var shuffled = v.OrderBy(_ => Random.value).ToList();
         
         // 전투 타일
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 22; i++)
         {
-            _tiles[shuffled[i]].ETileType = ETileType.Battle;
-            _tiles[shuffled[i]].SetTileSprite();
+            _tiles[shuffled[i]].ChangeTile(ETileType.Battle);
         }
         
         // 이벤트 타일
-        for (int i = 8; i < 29; i++)
+        for (int i = 22; i < 28; i++)
         {
-            int value = Random.Range(1, 5);
+            int value = Random.Range(2, 5);
 
-            _tiles[shuffled[i]].ETileType = (ETileType)value;
-            _tiles[shuffled[i]].SetTileSprite();
+            _tiles[shuffled[i]].ChangeTile((ETileType)value);
         }
         
         // 보물 찾기 타일
-        _tiles[shuffled[30]].ETileType = ETileType.Treasure;
-        _tiles[shuffled[30]].SetTileSprite();
+        _tiles[shuffled[29]].ChangeTile(ETileType.Treasure);
         TreasureCount = 1;
+        
+        // 패시브 타일
+        _tiles[7].ChangeTile(ETileType.Passive);
     }
     
 }
