@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,7 +12,11 @@ public class TileManager : MonoBehaviour
     private int _playerPosition;
     [SerializeField] private GameObject _player;
 
+    [SerializeField] private float _jumpHeight = 2.0f;
+    
     public static int TreasureCount = 0;
+    
+    private bool _isPlayerMove = false;
     
     private void Start()
     {
@@ -25,6 +30,9 @@ public class TileManager : MonoBehaviour
 
     private void Update()
     {
+        if (_isPlayerMove)
+            return;
+        
         int moveCount = 0;
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -47,57 +55,14 @@ public class TileManager : MonoBehaviour
             moveCount = 9;
         else if (Input.GetKeyDown(KeyCode.A))
             moveCount = Random.Range(0, 12) + 1;
-        
+
         if (moveCount > 0)
-            ProcessMove(moveCount);
-    }
-
-    private void ProcessMove(int moveCount)
-    {
-        int prePosition = _playerPosition;
-        _playerPosition = (_playerPosition + moveCount) % _tiles.Count;
-
-        // 다음 위치로 이동
-        var playerTile = _tiles[_playerPosition];
-        _player.transform.SetParent(playerTile.transform, false);
-        playerTile.Execute();
-
-        var tileType = playerTile.ETileType;
-        
-        // 밟은 타일이 Treasure Start인 경우
-        if (tileType == ETileType.Treasure && TreasureCount == 1)
         {
-            List<int> v = new List<int>();
-            for (int i = 1; i < 40; i++)
-            {
-                if (i % 10 != 0)
-                {
-                    v.Add(i);
-                }
-            }
-
-            var shuffled = v.OrderBy(_ => Random.value).ToList();
-
-            foreach (var i in shuffled)
-            {
-                if (_tiles[i].ETileType == ETileType.Basic)
-                {
-                    _tiles[i].ChangeTile(ETileType.Treasure);
-                    print("Treasure 도착 생성");
-                    break;
-                }
-            }
-        }
-        
-        // 시작 지점을 지나갈 때는 갱신을 해야 합니다.
-        if (prePosition > _playerPosition)
-        {
-            foreach (var tile in _tiles)
-            {
-                tile.UpdateTile();
-            }
+            int nxt = (_playerPosition + moveCount) % _tiles.Count;
+            StartCoroutine(MovePlayer(_playerPosition, nxt));
         }
     }
+
 
     private void GenerateBoard()
     {
@@ -106,7 +71,7 @@ public class TileManager : MonoBehaviour
         List<int> v = new List<int>();
         for (int i = 1; i < 40; i++)
         {
-            if (i % 10 != 0 && i != 7)
+            if (i % 10 != 0 && i != 8)
             {
                 v.Add(i);
             }
@@ -133,7 +98,97 @@ public class TileManager : MonoBehaviour
         TreasureCount = 1;
         
         // 패시브 타일
-        _tiles[7].ChangeTile(ETileType.Passive);
+        _tiles[8].ChangeTile(ETileType.Passive);
+    }
+
+
+    private IEnumerator MovePlayer(int start, int end)
+    {
+        _isPlayerMove = true;
+        // 한 칸씩 이동합니다.
+        for (int cur = start; cur != end; cur = (cur + 1) % _tiles.Count)
+        {
+            // 다음 타일 계산
+            int nxt = (cur + 1) % _tiles.Count;
+
+            var curTransform = _tiles[cur].gameObject.transform;
+            var nxtTransform = _tiles[nxt].gameObject.transform;
+            
+            // 이동 방향 계산하여 캐릭터 방향 결정
+            Vector3 delta = nxtTransform.position - curTransform.position;
+            if (delta.x > 0) _player.transform.localScale = new Vector3(-5f, 5f, 5f);
+            else _player.transform.localScale = new Vector3(5f, 5f, 5f);
+    
+            // 포물선 형태로 이동
+            float elapsed = 0f;
+            float duration = nxt == end ? 0.6f : 0.4f;
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+
+                Vector3 pos = Vector3.Lerp(curTransform.position, nxtTransform.position, t);
+                // 포물선 공식 -4h(t - 0.5)^2 + h
+                float heightOffset = -4 * _jumpHeight * (t - 0.5f) * (t - 0.5f) + _jumpHeight;
+                pos.y += heightOffset;
+
+                _player.transform.position = pos;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            
+            // 다음 위치로 이동
+            _player.transform.SetParent(nxtTransform, false);
+            _player.transform.localPosition = Vector3.zero;
+            
+            // 출발 지점을 지나갈 때는 전체 타일 업데이트
+            // TODO
+            // 코드 분리
+            if (nxt == 0)
+            {
+                foreach (var tile in _tiles)
+                {
+                    tile.UpdateTile();
+                }
+            }
+        }
+        
+        // 위치 갱신하고 Execute 처리
+        _playerPosition = end;
+        ExecuteTile(_tiles[_playerPosition]);
+        _isPlayerMove = false;
     }
     
+    private void ExecuteTile(Tile playerTile)
+    {
+        ETileType tileType = playerTile.ETileType;
+        
+        playerTile.Execute();
+        
+        // 밟은 타일이 Treasure Start인 경우 Basic 타일 중에서 Treasure End를 하나 생성합니다.
+        if (tileType == ETileType.Treasure && TreasureCount == 1)
+        {
+            List<int> v = new List<int>();
+            for (int i = 1; i < 40; i++)
+            {
+                if (i % 10 != 0)
+                {
+                    v.Add(i);
+                }
+            }
+
+            var shuffled = v.OrderBy(_ => Random.value).ToList();
+
+            foreach (var i in shuffled)
+            {
+                if (_tiles[i].ETileType == ETileType.Basic)
+                {
+                    _tiles[i].ChangeTile(ETileType.Treasure);
+                    print("Treasure 도착 생성");
+                    break;
+                }
+            }
+        }
+    }
 }
+ 
+

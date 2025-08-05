@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 7548139898082791852, guid: 6646aaa0302f0412b8483a6da4dd3d1f, type: 3}
+  _jumpHeight: 2
 --- !u!4 &483245399
 Transform:
   m_ObjectHideFlags: 0
