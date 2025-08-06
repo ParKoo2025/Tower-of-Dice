@@ -27,6 +27,9 @@ public class TileUtil : MonoBehaviour
     [ShowInInspector] private static float _tileMoveAnimationTime = 0.3f;
     [InfoBox("타일이 떨어지는 간격")]
     [ShowInInspector] private static float _tileMoveAnimationIntervalTime = 0.1f;
+    [InfoBox("타일이 떨어지는 높이")]
+    [ShowInInspector] private static float _tileHeight = 5f;
+
      
     private static readonly string SPRITE_PATH = "ASE/";    
 
@@ -179,7 +182,7 @@ public class TileUtil : MonoBehaviour
         tile.InitializeTile(eTileStyle);
         
         tile.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
-        tile.transform.position = spawnPosition + Vector3.up * 5f;
+        tile.transform.position = spawnPosition + Vector3.up * _tileHeight;
     
         return tile;
     }
