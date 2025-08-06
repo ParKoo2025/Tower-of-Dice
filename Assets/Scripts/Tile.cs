@@ -6,12 +6,10 @@ using Random = UnityEngine.Random;
 
 public class Tile : MonoBehaviour
 {
-    
     private SpriteRenderer _spriteRenderer;
 
     private ITileBehaviour _tileBehaviour;
     
-
     [SerializeField] [ReadOnly]
     private ETileStyle _eTileStyle;
     public ETileStyle ETileStyle => _eTileStyle;
