@@ -15,6 +15,9 @@ public class TileManager : MonoBehaviour
 
     [SerializeField] private float _jumpHeight = 2.0f;
     
+    [SerializeField] private EDiceType _leftDice = EDiceType.Basic;
+    [SerializeField] private EDiceType _rightDice = EDiceType.Basic;
+    
     public static int TreasureCount = 0;
     
     private bool _isPlayerMove = true;
@@ -54,7 +57,13 @@ public class TileManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha9))
             moveCount = 9;
         else if (Input.GetKeyDown(KeyCode.A))
-            moveCount = Random.Range(0, 12) + 1;
+        {
+            int left = Dice.RollTheDice(_leftDice);
+            int right = Dice.RollTheDice(_rightDice);
+            
+            print($"{_leftDice} -> {left} {_rightDice} -> {right}\n 이동 거리 : {left + right}");
+            moveCount = left + right;
+        }
 
         if (moveCount > 0)
         {
