@@ -37,6 +37,13 @@ public class TileUtil : MonoBehaviour
     private static Dictionary<ETileType, Sprite> _ltTileSprites;
     private static Dictionary<ETileType, Sprite> _rtTileSprites;
 
+    /// <summary>
+    /// ETileStyle, ETileType에 해당하는 Tile Sprite를 반환합니다.
+    /// 만약 해당하는 Sprite가 없다면 null을 반환합니다.
+    /// </summary>
+    /// <param name="eTileStyle"></param>
+    /// <param name="eTileType"></param>
+    /// <returns></returns>
     public static Sprite GetTileSprite(ETileStyle eTileStyle, ETileType eTileType)
     {
         Sprite sprite = null;
@@ -58,19 +65,21 @@ public class TileUtil : MonoBehaviour
         return sprite;
     }
 
-    public static List<Tile> TileGenerate(Transform parent)
+    /// <summary>
+    /// Tile을 생성합니다.
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <returns></returns>
+    public static List<Tile> GenerateTileObject(Transform parent)
     {
         var tiles = new List<Tile>();
 
-        float delay = _tileMoveAnimationIntervalTime;
-        
-        
+        GameObject tileObject = Resources.Load<GameObject>(SPRITE_PATH + "Tile");
         
         // bottom C tile
         Vector3 spawnPosition = Vector3.zero;
-        Tile tile = GenerateTile("Bottom C", spawnPosition, ETileStyle.C, parent);
-        tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-        tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+        Tile tile = GenerateTile("Bottom C", tileObject, spawnPosition, ETileStyle.C, parent);
+       
         tiles.Add(tile);
         
         // Left RT tiles
@@ -78,9 +87,7 @@ public class TileUtil : MonoBehaviour
         Vector3 deltaPosition = new Vector3(-2.0f, 2.0f, 1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Left RT" + (i + 1), spawnPosition, ETileStyle.RT, parent);
-            tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-            tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+            tile = GenerateTile("Left RT" + (i + 1), tileObject, spawnPosition, ETileStyle.RT, parent);
             tiles.Add(tile);
             
             spawnPosition += deltaPosition;
@@ -88,9 +95,7 @@ public class TileUtil : MonoBehaviour
 
         // left c Tile
         spawnPosition += new Vector3(-0.85f, 0.45f, 1.0f);
-        tile = GenerateTile("Bottom C", spawnPosition, ETileStyle.C, parent);
-        tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-        tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+        tile = GenerateTile("Bottom C", tileObject, spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Left LT Tiles;
@@ -98,9 +103,7 @@ public class TileUtil : MonoBehaviour
         deltaPosition = new Vector3(2.0f, 2.0f, 1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Left LT" + (i + 1), spawnPosition, ETileStyle.LT, parent);
-            tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-            tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+            tile = GenerateTile("Left LT" + (i + 1), tileObject, spawnPosition, ETileStyle.LT, parent);
             tiles.Add(tile);
             
             spawnPosition += deltaPosition;
@@ -108,9 +111,7 @@ public class TileUtil : MonoBehaviour
         
         // Top C tile
         spawnPosition += new Vector3(0.45f, 0.85f, 1.0f);
-        tile = GenerateTile("Top C", spawnPosition, ETileStyle.C, parent);
-        tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-        tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+        tile = GenerateTile("Top C", tileObject, spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Right RT tile
@@ -118,9 +119,7 @@ public class TileUtil : MonoBehaviour
         deltaPosition = new Vector3(2.0f, -2.0f, -1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Right RT" + (i + 1), spawnPosition, ETileStyle.RT, parent);
-            tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-            tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+            tile = GenerateTile("Right RT" + (i + 1), tileObject, spawnPosition, ETileStyle.RT, parent);
             tiles.Add(tile);
 
             spawnPosition += deltaPosition;
@@ -128,9 +127,7 @@ public class TileUtil : MonoBehaviour
         
         // Right C Tile
         spawnPosition += new Vector3(0.85f, -0.45f, -1.0f);
-        tile = GenerateTile("Right C", spawnPosition, ETileStyle.C, parent);
-        tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-        tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+        tile = GenerateTile("Right C", tileObject, spawnPosition, ETileStyle.C, parent);
         tiles.Add(tile);
         
         // Right LT tiles
@@ -138,15 +135,40 @@ public class TileUtil : MonoBehaviour
         deltaPosition = new Vector3(-2.0f, -2.0f, -1.0f);
         for (int i = 0; i < 9; i++)
         {
-            tile = GenerateTile("Right LT" + (i + 1), spawnPosition, ETileStyle.LT, parent);
-            tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime).SetDelay(delay * tiles.Count);
-            tile.transform.DOMove(spawnPosition, _tileMoveAnimationTime).SetDelay(delay * tiles.Count + _fadeInAnimationTime).SetEase(_tileAnimation);
+            tile = GenerateTile("Right LT" + (i + 1), tileObject, spawnPosition, ETileStyle.LT, parent);
             tiles.Add(tile);
             
             spawnPosition += deltaPosition;
         }
         
         return tiles;
+    }
+
+    /// <summary>
+    /// Tile 생성 Animation을 생성합니다.
+    /// </summary>
+    /// <param name="tiles"></param>
+    /// <returns></returns>
+    public static Sequence GenerateTileSpawnAnimation(List<Tile> tiles)
+    {
+        Sequence mainSequence = DOTween.Sequence();
+        
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            var tile = tiles[i];
+            Vector3 position = tile.transform.position;
+            
+            tile.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
+            tile.transform.position = position + Vector3.up * _tileHeight;
+
+            Sequence tileAnim = DOTween.Sequence()
+                .Append(tile.GetComponent<SpriteRenderer>().DOFade(1f, _fadeInAnimationTime))
+                .Join(tile.transform.DOMove(position, _tileMoveAnimationTime).SetEase(_tileAnimation));
+
+            mainSequence.Insert(_tileMoveAnimationIntervalTime * i, tileAnim);
+        }
+
+        return mainSequence;
     }
 
     private void Awake()
@@ -173,16 +195,13 @@ public class TileUtil : MonoBehaviour
         return dic;
     }
 
-    private static Tile GenerateTile(string name, Vector3 spawnPosition, ETileStyle eTileStyle, Transform parent)
+    private static Tile GenerateTile(string name, GameObject tileObject, Vector3 spawnPosition, ETileStyle eTileStyle, Transform parent)
     {
-        GameObject go = Instantiate(Resources.Load<GameObject>(SPRITE_PATH + "Tile"), parent);
-        go.transform.position = spawnPosition;
+        GameObject go = Instantiate(tileObject, spawnPosition, Quaternion.identity, parent);
+        go.name = name;
         
         var tile = go.GetComponent<Tile>();
         tile.InitializeTile(eTileStyle);
-        
-        tile.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0f);
-        tile.transform.position = spawnPosition + Vector3.up * _tileHeight;
     
         return tile;
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,11 +17,10 @@ public class TileManager : MonoBehaviour
     
     public static int TreasureCount = 0;
     
-    private bool _isPlayerMove = false;
+    private bool _isPlayerMove = true;
     
     private void Start()
     {
-        
         GenerateBoard();
         _playerPosition = 0;
         _player = Instantiate(_player, _tiles[_playerPosition].transform, false);
@@ -66,7 +66,8 @@ public class TileManager : MonoBehaviour
 
     private void GenerateBoard()
     {
-        _tiles = TileUtil.TileGenerate(transform);
+        _tiles = TileUtil.GenerateTileObject(transform);
+        var sequece = TileUtil.GenerateTileSpawnAnimation(_tiles).OnComplete(() => { _isPlayerMove = false; });
 
         List<int> v = new List<int>();
         for (int i = 1; i < 40; i++)
