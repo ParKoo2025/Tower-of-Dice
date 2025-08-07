@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TileManager : MonoBehaviour
@@ -17,6 +18,10 @@ public class TileManager : MonoBehaviour
     
     [SerializeField] private EDiceType _leftDice = EDiceType.Basic;
     [SerializeField] private EDiceType _rightDice = EDiceType.Basic;
+
+    [SerializeField] private Image _leftDiceImage;
+    [SerializeField] private Image _rightDiceImage;
+    
     
     public static int TreasureCount = 0;
     
@@ -58,8 +63,13 @@ public class TileManager : MonoBehaviour
             moveCount = 9;
         else if (Input.GetKeyDown(KeyCode.A))
         {
-            int left = Dice.RollTheDice(_leftDice);
-            int right = Dice.RollTheDice(_rightDice);
+            Sprite leftDiceSprite = null;
+            Sprite rightDiceSprite = null;
+            int left = Dice.RollTheDice(_leftDice, out leftDiceSprite);
+            int right = Dice.RollTheDice(_rightDice, out rightDiceSprite);
+
+            _leftDiceImage.sprite = leftDiceSprite;
+            _rightDiceImage.sprite = rightDiceSprite;
             
             print($"{_leftDice} -> {left} {_rightDice} -> {right}\n 이동 거리 : {left + right}");
             moveCount = left + right;

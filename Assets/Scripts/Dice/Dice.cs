@@ -6,10 +6,10 @@ public class Dice : MonoBehaviour
 {
     private static Dictionary<EDiceType, IDice> _diceDictionary = new Dictionary<EDiceType, IDice>();
 
-    public static int RollTheDice(EDiceType diceType)
+    public static int RollTheDice(EDiceType diceType, out Sprite diceSprite)
     {
         var dice = _diceDictionary[diceType];
-        return dice.RollTheDice();
+        return dice.RollTheDice(out diceSprite);
     }
 
     private void Awake()

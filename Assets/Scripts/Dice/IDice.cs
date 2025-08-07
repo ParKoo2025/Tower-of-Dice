@@ -7,52 +7,63 @@ public enum EDiceType
 
 public interface IDice
 {
-    public EDiceType DiceType { get; }
-
-    public int RollTheDice();
+    public int RollTheDice(out Sprite diceSprite);
 }
 
 public class BasicDice : IDice
 {
-    public EDiceType DiceType { get; } = EDiceType.Basic;
-    public int RollTheDice()
+    private Sprite[] _sprites = Resources.LoadAll<Sprite>("Dice/Basic");    
+    
+    public int RollTheDice(out Sprite diceSprite)
     {
-        return UnityEngine.Random.Range(0, 6) + 1;
+        int value = UnityEngine.Random.Range(0, 6);
+        diceSprite = _sprites[value];
+        return value + 1;
     }
 }
 
 public class HighDice : IDice
 {
-    public EDiceType DiceType { get; } = EDiceType.High;
-    public int RollTheDice()
+    private Sprite[] _sprites = Resources.LoadAll<Sprite>("Dice/High");    
+    public int RollTheDice(out Sprite diceSprite)
     {
-        return UnityEngine.Random.Range(0, 3) + 4;
+        int value = UnityEngine.Random.Range(0, 3);
+        diceSprite = _sprites[value];
+        return value + 4;
     }
 }
 
 public class LowDice : IDice
 {
-    public EDiceType DiceType { get; } = EDiceType.Low;
-    public int RollTheDice()
+    private Sprite[] _sprites = Resources.LoadAll<Sprite>("Dice/Low");    
+    public int RollTheDice(out Sprite diceSprite)
     {
-        return UnityEngine.Random.Range(0, 3) + 1;
+        int value = UnityEngine.Random.Range(0, 3);
+        diceSprite = _sprites[value];
+        return value + 1;
     }
 }
 
 public class OddDice : IDice
 {
+    private Sprite[] _sprites = Resources.LoadAll<Sprite>("Dice/Odd");    
+
     public EDiceType DiceType { get; } = EDiceType.Odd;
-    public int RollTheDice()
+    public int RollTheDice(out Sprite diceSprite)
     {
-        return UnityEngine.Random.Range(0, 3) * 2 + 1;
+        int value = UnityEngine.Random.Range(0, 3);
+        diceSprite = _sprites[value];
+        return value * 2 + 1;
     }
 }
 
 public class EvenDice : IDice
 {
-    public EDiceType DiceType { get; } = EDiceType.Even;
-    public int RollTheDice()
+    private Sprite[] _sprites = Resources.LoadAll<Sprite>("Dice/Even");    
+    public int RollTheDice(out Sprite diceSprite)
     {
-        return UnityEngine.Random.Range(0, 3) * 2 + 2;
+        int value = UnityEngine.Random.Range(0, 3);
+        diceSprite = _sprites[value];
+        return value * 2 + 2;
     }
 }
