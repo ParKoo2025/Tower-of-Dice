@@ -42,8 +42,17 @@ public static class TileBehaviourFactory
             case ETileType.Treasure:
                 ret = new TreasureTileBehaviour();
                 break;
-            case ETileType.Battle:
-                ret = new BattleTileBehaviour();
+            case ETileType.Battle1:
+                ret = new Battle1TileBehaviour();
+                break;
+            case ETileType.Battle2:
+                ret = new Battle2TileBehaviour();
+                break;
+            case ETileType.Battle3:
+                ret = new Battle3TileBehaviour();
+                break;
+            case ETileType.Battle4:
+                ret = new Battle4TileBehaviour();
                 break;
             default:
                 Debug.LogError("UnDefined Behaviour");

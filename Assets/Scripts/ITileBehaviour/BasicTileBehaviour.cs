@@ -19,7 +19,7 @@ public class BasicTileBehaviour : ITileBehaviour
         }
         else if (value == 1)
         {
-            tile.ChangeTile(ETileType.Battle);
+            tile.ChangeTile(ETileType.Battle1);
         }
     }
 
