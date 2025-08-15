@@ -7,7 +7,7 @@ public enum ETileType
 {
     Basic,
     Passive, Roulette, Ladder, Toss, Treasure,
-    Battle,
+    Battle1, Battle2, Battle3, Battle4,
     Smithy, Airplane, Store, Bank, Start, Alchemy,
     Size
 }

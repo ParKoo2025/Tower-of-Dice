@@ -68,8 +68,8 @@ public class TileManager : MonoBehaviour
             int left = Dice.RollTheDice(_leftDice, out leftDiceSprite);
             int right = Dice.RollTheDice(_rightDice, out rightDiceSprite);
 
-            _leftDiceImage.sprite = leftDiceSprite;
-            _rightDiceImage.sprite = rightDiceSprite;
+            //_leftDiceImage.sprite = leftDiceSprite;
+            //_rightDiceImage.sprite = rightDiceSprite;
             
             print($"{_leftDice} -> {left} {_rightDice} -> {right}\n 이동 거리 : {left + right}");
             moveCount = left + right;
@@ -102,7 +102,7 @@ public class TileManager : MonoBehaviour
         // 전투 타일
         for (int i = 0; i < 22; i++)
         {
-            _tiles[shuffled[i]].ChangeTile(ETileType.Battle);
+            _tiles[shuffled[i]].ChangeTile(ETileType.Battle1);
         }
         
         // 이벤트 타일
