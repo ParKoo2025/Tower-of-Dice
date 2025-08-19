@@ -18,6 +18,7 @@ public class PlayerStat : MonoBehaviour
     public void SetEquipment(EEquipmentType equipmentType, StatScriptable equipmentStat)
     {
         _equipmentStat[(int)equipmentType] = equipmentStat;
+        CalculateStat();
     }    
     
     /// <summary>
@@ -25,6 +26,15 @@ public class PlayerStat : MonoBehaviour
     /// </summary>
     private void CalculateStat()
     {
-        
+        for (int i = 0; i < (int)EStatType.Size; i++)
+        {
+            float sum = _basicStat[(EStatType)i];
+            for (int j = 0; j < (int)EEquipmentType.Size; j++)
+            {
+                sum += _equipmentStat[j][(EStatType)i];
+            }
+
+            TotalStat[(EStatType)i] = sum;
+        }
     }
 }
