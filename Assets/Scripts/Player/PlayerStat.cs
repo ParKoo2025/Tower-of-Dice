@@ -5,15 +5,9 @@ using UnityEngine;
 public class PlayerStat : MonoBehaviour
 {
     [SerializeField] private StatScriptable _basicStat;
-    private List<StatScriptable> _equipmentStat;
+    [SerializeField] private List<StatScriptable> _equipmentStat = new List<StatScriptable>();
 
-    private void Start()
-    {
-        _equipmentStat = new List<StatScriptable>(4);
-        
-    }
-
-    public Stat TotalStat { get; private set; }
+    public Stat TotalStat { get; private set; } = new Stat();
 
     public void SetEquipment(EEquipmentType equipmentType, StatScriptable equipmentStat)
     {
@@ -36,5 +30,10 @@ public class PlayerStat : MonoBehaviour
 
             TotalStat[(EStatType)i] = sum;
         }
+    }
+
+    private void Start()
+    {
+        CalculateStat();
     }
 }

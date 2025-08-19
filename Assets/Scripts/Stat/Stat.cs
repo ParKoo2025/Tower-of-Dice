@@ -79,11 +79,4 @@ public class Stat
     {
         InitializeStatsData();
     }
-
-    // Unity 직렬화 시스템을 위한 추가 초기화
-    [System.Runtime.Serialization.OnDeserializing]
-    private void OnDeserializing(System.Runtime.Serialization.StreamingContext context)
-    {
-        InitializeStatsData();
-    }
 }

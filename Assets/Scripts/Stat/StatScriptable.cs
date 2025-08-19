@@ -1,7 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-[CreateAssetMenu(fileName = "Statistics", menuName = "ScriptableObjects/Statistics", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "Stat", menuName = "ScriptableObjects/Stat", order = int.MaxValue)]
 public class StatScriptable : ScriptableObject
 {
     [SerializeField]

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03cf75640f476446a80fec8346856e2, type: 3}
+  m_Name: DefaultEquipmentStat
+  m_EditorClassIdentifier: 
+  _stats:
+    statsData:
+    - Name: Health
+      Value: 0
+    - Name: HealthRegen
+      Value: 0
+    - Name: HealthStealRate
+      Value: 0
+    - Name: AttackDamage
+      Value: 0
+    - Name: AttackSpeed
+      Value: 0
+    - Name: AocDamage
+      Value: 0
+    - Name: CriticalRate
+      Value: 0
+    - Name: CriticalMultiplier
+      Value: 0
+    - Name: Defence
+      Value: 0
+    - Name: EvasionRate
+      Value: 0
+    - Name: CounterAttackRate
+      Value: 0
