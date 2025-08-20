@@ -7,25 +7,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class TileManager : MonoBehaviour
+public class TileManager : SingletonBehavior<TileManager>
 {
     private List<Tile> _tiles;
 
-    private int _playerPosition;
+    [SerializeField] private float _jumpHeight = 2.0f;
     [SerializeField] private GameObject _player;
 
-    [SerializeField] private float _jumpHeight = 2.0f;
-    
-    [SerializeField] private EDiceType _leftDice = EDiceType.Basic;
-    [SerializeField] private EDiceType _rightDice = EDiceType.Basic;
+    private int _playerPosition;
 
-    [SerializeField] private Image _leftDiceImage;
-    [SerializeField] private Image _rightDiceImage;
-    
-    
     public static int TreasureCount = 0;
-    
-    private bool _isPlayerMove = true;
+
+    public void MovePlayer(int moveCount)
+    {
+        int nxt = (_playerPosition + moveCount) % _tiles.Count;
+        StartCoroutine(MovePlayer(_playerPosition, nxt));
+    }
     
     private void Start()
     {
@@ -36,57 +33,13 @@ public class TileManager : MonoBehaviour
         Camera.main.transform.SetParent(_player.transform);
     }
 
-    private void Update()
-    {
-        if (_isPlayerMove)
-            return;
-        
-        int moveCount = 0;
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            moveCount = 1;
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            moveCount = 2;
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-            moveCount = 3;
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-            moveCount = 4;
-        else if (Input.GetKeyDown(KeyCode.Alpha5))
-            moveCount = 5;
-        else if (Input.GetKeyDown(KeyCode.Alpha6))
-            moveCount = 6;
-        else if (Input.GetKeyDown(KeyCode.Alpha7))
-            moveCount = 7;
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-            moveCount = 8;
-        else if (Input.GetKeyDown(KeyCode.Alpha9))
-            moveCount = 9;
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            Sprite leftDiceSprite = null;
-            Sprite rightDiceSprite = null;
-            int left = Dice.RollTheDice(_leftDice, out leftDiceSprite);
-            int right = Dice.RollTheDice(_rightDice, out rightDiceSprite);
-
-            //_leftDiceImage.sprite = leftDiceSprite;
-            //_rightDiceImage.sprite = rightDiceSprite;
-            
-            print($"{_leftDice} -> {left} {_rightDice} -> {right}\n 이동 거리 : {left + right}");
-            moveCount = left + right;
-        }
-
-        if (moveCount > 0)
-        {
-            int nxt = (_playerPosition + moveCount) % _tiles.Count;
-            StartCoroutine(MovePlayer(_playerPosition, nxt));
-        }
-    }
-
-
     private void GenerateBoard()
     {
         _tiles = TileUtil.GenerateTileObject(transform);
-        var sequece = TileUtil.GenerateTileSpawnAnimation(_tiles).OnComplete(() => { _isPlayerMove = false; });
+        var sequece = TileUtil.GenerateTileSpawnAnimation(_tiles).OnComplete(() =>
+        {
+            GameManager.Instance.GameState = GameManager.EGameState.Idle; 
+        });
 
         List<int> v = new List<int>();
         for (int i = 1; i < 40; i++)
@@ -124,7 +77,6 @@ public class TileManager : MonoBehaviour
 
     private IEnumerator MovePlayer(int start, int end)
     {
-        _isPlayerMove = true;
         // 한 칸씩 이동합니다.
         for (int cur = start; cur != end; cur = (cur + 1) % _tiles.Count)
         {
@@ -175,7 +127,6 @@ public class TileManager : MonoBehaviour
         // 위치 갱신하고 Execute 처리
         _playerPosition = end;
         ExecuteTile(_tiles[_playerPosition]);
-        _isPlayerMove = false;
     }
     
     private void ExecuteTile(Tile playerTile)
@@ -208,6 +159,8 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
     }
 }
  
