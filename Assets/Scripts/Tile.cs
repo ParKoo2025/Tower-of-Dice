@@ -48,6 +48,9 @@ public class Tile : MonoBehaviour
         _eTileType = eTileType;
         _tileBehaviour = TileBehaviourFactory.Create(ETileStyle, ETileType);
         SetTileSprite();
+
+        // 임시로 여기에 놓기!
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
     }
     
     private void Awake()

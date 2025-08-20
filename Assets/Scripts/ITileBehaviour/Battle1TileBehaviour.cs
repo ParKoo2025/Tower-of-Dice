@@ -1,10 +1,19 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Battle1TileBehaviour : ITileBehaviour, IBattleTileBehaviour
 {
+    private List<GameObject> _monsters;
+    
     public int Difficulty { get; } = 1;
+    
+    public Battle1TileBehaviour()
+    {
+        _monsters = new List<GameObject>();
+        _monsters.Add(MonsterFactory.Instance.GetRandomMonster());
+    }
     
     public void Update(Tile tile)
     {
@@ -18,8 +27,7 @@ public class Battle1TileBehaviour : ITileBehaviour, IBattleTileBehaviour
 
     public void Execute(Tile tile)
     {
-        Debug.Log("Battle1 Tile 도착");
-        tile.ChangeTile(ETileType.Basic);
+        CombatManager.Instance.StartBattle(_monsters);        
     }
 
 }

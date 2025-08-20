@@ -13,7 +13,10 @@ public class TileManager : SingletonBehavior<TileManager>
 
     [SerializeField] private float _jumpHeight = 2.0f;
     [SerializeField] private GameObject _player;
-
+    [SerializeField] private Camera _mainCamera;
+    
+    public GameObject Player => _player;
+    
     private int _playerPosition;
 
     public static int TreasureCount = 0;
@@ -23,6 +26,18 @@ public class TileManager : SingletonBehavior<TileManager>
         int nxt = (_playerPosition + moveCount) % _tiles.Count;
         StartCoroutine(MovePlayer(_playerPosition, nxt));
     }
+
+    public void ResetTile()
+    {
+        _tiles[_playerPosition].ChangeTile(ETileType.Basic);
+    }
+
+    public void ResetPlayerPosition()
+    {
+        _player.transform.SetParent(_tiles[_playerPosition].transform, false);
+        _player.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+        _mainCamera.transform.SetParent(_player.transform, false);
+    }
     
     private void Start()
     {
@@ -30,7 +45,7 @@ public class TileManager : SingletonBehavior<TileManager>
         _playerPosition = 0;
         _player = Instantiate(_player, _tiles[_playerPosition].transform, false);
         _player.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
-        Camera.main.transform.SetParent(_player.transform);
+        _mainCamera.transform.SetParent(_player.transform, false);
     }
 
     private void GenerateBoard()
@@ -133,6 +148,7 @@ public class TileManager : SingletonBehavior<TileManager>
     {
         ETileType tileType = playerTile.ETileType;
         
+        GameManager.Instance.GameState = GameManager.EGameState.Event;
         playerTile.Execute();
         
         // 밟은 타일이 Treasure Start인 경우 Basic 타일 중에서 Treasure End를 하나 생성합니다.
@@ -159,8 +175,6 @@ public class TileManager : SingletonBehavior<TileManager>
                 }
             }
         }
-
-        GameManager.Instance.GameState = GameManager.EGameState.Idle;
     }
 }
  

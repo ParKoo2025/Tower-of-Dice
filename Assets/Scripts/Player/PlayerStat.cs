@@ -14,6 +14,11 @@ public class PlayerStat : MonoBehaviour
         _equipmentStat[(int)equipmentType] = equipmentStat;
         CalculateStat();
     }    
+
+    private void Start()
+    {
+        CalculateStat();
+    }
     
     /// <summary>
     /// TotalStat을 계산한다.
@@ -30,10 +35,5 @@ public class PlayerStat : MonoBehaviour
 
             TotalStat[(EStatType)i] = sum;
         }
-    }
-
-    private void Start()
-    {
-        CalculateStat();
     }
 }

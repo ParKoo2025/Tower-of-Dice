@@ -26,6 +26,6 @@ public class BasicTileBehaviour : ITileBehaviour
     public void Execute(Tile tile)
     {
         Debug.Log("Basic Tile 도착");
-
+        tile.ChangeTile(ETileType.Basic);
     }
 }

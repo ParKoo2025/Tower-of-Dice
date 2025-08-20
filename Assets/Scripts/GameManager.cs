@@ -23,6 +23,21 @@ public class GameManager : SingletonBehavior<GameManager>
 
     public EGameState GameState { get; set; } = EGameState.Init;
 
+    public void OnBattleEnd(bool isPlayerWin)
+    {
+        CombatManager.Instance.EndBattle();
+        
+        if (isPlayerWin)
+            OnPlayerBattleWin();
+        else
+            OnPlayerBattleLose();
+        
+        TileManager.Instance.ResetPlayerPosition();
+        TileManager.Instance.ResetTile();
+
+        GameState = EGameState.Idle;
+    }
+    
     private void Update()
     {
         if (GameState == EGameState.Idle)
@@ -72,5 +87,16 @@ public class GameManager : SingletonBehavior<GameManager>
             GameState = EGameState.Move;
             TileManager.Instance.MovePlayer(moveCount);
         }
+    }
+    
+    private void OnPlayerBattleWin()
+    {
+        
+        
+    }
+
+    private void OnPlayerBattleLose()
+    {
+        
     }
 }
