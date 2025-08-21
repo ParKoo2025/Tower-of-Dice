@@ -27,5 +27,7 @@ public class BasicTileBehaviour : ITileBehaviour
     {
         Debug.Log("Basic Tile 도착");
         tile.ChangeTile(ETileType.Basic);
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
+
     }
 }

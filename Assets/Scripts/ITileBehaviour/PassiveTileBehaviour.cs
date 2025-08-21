@@ -10,6 +10,7 @@ public class PassiveTileBehaviour : ITileBehaviour
     public void Execute(Tile tile)
     {
         Debug.Log("Passive Tile 도착");
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
     }
 }
 

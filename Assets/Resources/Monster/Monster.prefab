@@ -3663,6 +3663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb51d979b7c9ad7489d6c102301f7300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _monsterAnimator: {fileID: 2262796793099195375}
 --- !u!114 &525341351083194930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14378,6 +14379,7 @@ GameObject:
   - component: {fileID: 8410832258237308930}
   - component: {fileID: 8247131749920522413}
   - component: {fileID: 2262796793099195375}
+  - component: {fileID: 7493399233310917213}
   m_Layer: 0
   m_Name: HorseRoot
   m_TagString: Untagged
@@ -14436,6 +14438,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7493399233310917213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8735391699020361541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b82cfa744dda7418c5ba8677a10aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8739808089174468646
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,8 +25,38 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void EndBattle()
     {
+        _progressCombat = false;
         _battleGround.SetActive(false);
     }
+
+    public void ProcessPlayerAttack(float damage, float aocDamage)
+    {
+        if (_monsters.Count > 0)
+        {
+            _monsters.First().TakeDamage(damage);
+        }
+
+        foreach (var monster in _monsters)
+        {
+            if (aocDamage > 0)
+            {
+                monster.TakeDamage(aocDamage);
+            }
+        }
+
+        ProcessDeadMonsters();
+    }
+
+    public void ProcessMonsterAttack(Monster attacker, float damage)
+    {
+        _player.TakeDamage(damage);
+
+        if (_player.IsDead)
+        {
+            GameManager.Instance.OnBattleEnd(false);
+        }
+    }
+    
     private void Update()
     {
         if (GameManager.Instance.GameState != GameManager.EGameState.Event)
@@ -36,69 +66,11 @@ public class CombatManager : SingletonBehavior<CombatManager>
             return;
         
         // Player 공격 턴
-
-        if (_player.IsAttack())
-        {
-            
-            float aocDamage = 0f;
-            float damage = _player.GetDamage(out aocDamage);
-            
-            Debug.Log($"플레이어 공격");
-            
-            _monsters.First().TakeDamage(damage);
-
-            foreach (var monster in _monsters)
-            {
-                monster.TakeDamage(aocDamage);
-            }
-        }
-
-        List<Monster> monstersToRemove = new List<Monster>();
-
-        foreach (Monster monster in _monsters)
-        {
-            if (monster.IsDead)
-            {
-                monstersToRemove.Add(monster);
-            }
-        }
-
-        foreach (Monster monster in monstersToRemove)
-        {
-            _monsters.Remove(monster);
-            
-            Debug.Log($"{monster.name} 사망");
-            
-            Destroy(monster.gameObject);
-        }
-
-        if (_monsters.Count == 0)
-        {
-            // Player 승리 시나리오
-            GameManager.Instance.OnBattleEnd(true);
-            return;
-        }
-
+        TryPlayerAttack();
+        
         // Monster 공격 턴
+        TryMonstersAttack();
 
-        foreach (var monster in _monsters)
-        {
-            if (monster.IsAttack())
-            {
-                // 몬스터에선 필요 없긴 함
-                float aocDamage = 0f;
-
-                float damage = monster.GetDamage(out aocDamage);
-
-                _player.TakeDamage(damage);
-            }
-        }
-
-        if (_player.IsDead)
-        {
-            // 몬스터 승리 시나리오
-            GameManager.Instance.OnBattleEnd(false);
-        }
     }
 
     private void RegisterPlayer()
@@ -107,6 +79,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         
         _player.transform.SetParent(_battleGround.transform);
         _player.transform.position = new Vector3(-1f, 0f, 0f);
+        _player.transform.localScale = new Vector3(-1f, 1f, 1f);
         _player.Init();
     }
     
@@ -119,6 +92,50 @@ public class CombatManager : SingletonBehavior<CombatManager>
             monster.transform.localPosition = new Vector3(0.5f * (i + 1), 0.5f * (i % 2 - 1), 6);
             _monsters.Add(monster.GetComponent<Monster>());
             monster.GetComponent<Monster>().Init();
+        }
+    }
+
+    private void TryPlayerAttack()
+    {
+        if (_player.TryStartAttack())
+        {
+            print($"Player 공격 시작");
+        }
+    }
+    
+    private void TryMonstersAttack()
+    {
+        foreach (var monster in _monsters)
+        {
+            if (monster.TryStartAttack())
+            {
+                print($"{monster.name} 공격 시작");
+            }
+        }
+    }
+
+    private void ProcessDeadMonsters()
+    {
+        List<Monster> monstersToRemove = new List<Monster>();
+
+        foreach (var monster in _monsters)
+        {
+            if (monster.IsDead)
+            {
+                monstersToRemove.Add(monster);
+            }
+        }
+
+        foreach (var monster in monstersToRemove)
+        {
+            _monsters.Remove(monster);
+            print($"{monster.name} 사망");
+            Destroy(monster.gameObject);
+        }
+
+        if (_monsters.Count == 0)
+        {
+            GameManager.Instance.OnBattleEnd(true);
         }
     }
 }

@@ -11,6 +11,8 @@ public class RouletteTileBehaviour : ITileBehaviour
     {
         Debug.Log("Roulette Tile 도착");
         tile.ChangeTile(ETileType.Basic);
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
+        
     }
 }
 

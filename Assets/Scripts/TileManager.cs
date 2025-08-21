@@ -35,8 +35,14 @@ public class TileManager : SingletonBehavior<TileManager>
     public void ResetPlayerPosition()
     {
         _player.transform.SetParent(_tiles[_playerPosition].transform, false);
-        _player.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+        
+        if (_playerPosition > 10 && _playerPosition <= 30)
+            _player.transform.localScale = new Vector3(-5.0f, 5.0f, 5.0f);
+        else
+            _player.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+        
         _mainCamera.transform.SetParent(_player.transform, false);
+        _mainCamera.transform.localPosition = new Vector3(0.0f, 0.0f, -10.0f);
     }
     
     private void Start()
@@ -44,8 +50,7 @@ public class TileManager : SingletonBehavior<TileManager>
         GenerateBoard();
         _playerPosition = 0;
         _player = Instantiate(_player, _tiles[_playerPosition].transform, false);
-        _player.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
-        _mainCamera.transform.SetParent(_player.transform, false);
+        ResetPlayerPosition();
     }
 
     private void GenerateBoard()

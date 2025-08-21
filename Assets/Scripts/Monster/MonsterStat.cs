@@ -12,7 +12,7 @@ public class MonsterStat : MonoBehaviour
         _basicStat = stat;
     }
 
-    private void Start()
+    private void Awake()
     {
         CalculateStat();
     }

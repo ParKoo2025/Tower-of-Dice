@@ -1,9 +1,10 @@
 public interface ICombatant
 {
-    bool IsDead { get; }
-
-    void Init();
-    bool IsAttack();
-    float GetDamage(out float aocDamage);
-    void TakeDamage(float damage);
+    public bool IsDead { get; }
+    public bool CanAttack { get; }
+    public void Init();
+    public bool TryStartAttack();
+    public void OnAttackHit();
+    public void OnAttackComplete();
+    public void TakeDamage(float damage);
 }

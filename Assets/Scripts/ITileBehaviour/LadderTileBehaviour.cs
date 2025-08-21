@@ -11,6 +11,8 @@ public class LadderTileBehaviour : ITileBehaviour
     {
         Debug.Log("Ladder Tile 도착");
         tile.ChangeTile(ETileType.Basic);
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
+
     }
 }
 

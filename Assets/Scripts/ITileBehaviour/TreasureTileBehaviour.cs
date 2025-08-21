@@ -24,5 +24,7 @@ public class TreasureTileBehaviour : ITileBehaviour
         }
         
         tile.ChangeTile(ETileType.Basic);
+        
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
     }
 }

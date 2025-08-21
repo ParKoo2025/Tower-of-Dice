@@ -11,5 +11,7 @@ public class TossTileBehaviour : ITileBehaviour
     {
         Debug.Log("Coin Toss Tile 도착");
         tile.ChangeTile(ETileType.Basic);
+        
+        GameManager.Instance.GameState = GameManager.EGameState.Idle;
     }
 }
