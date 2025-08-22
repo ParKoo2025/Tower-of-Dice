@@ -156,6 +156,10 @@ public class TileManager : SingletonBehavior<TileManager>
         GameManager.Instance.GameState = GameManager.EGameState.Event;
         playerTile.Execute();
         
+        // 임시용
+        if (playerTile.ETileStyle == ETileStyle.C)
+            GameManager.Instance.GameState = GameManager.EGameState.Idle;
+        
         // 밟은 타일이 Treasure Start인 경우 Basic 타일 중에서 Treasure End를 하나 생성합니다.
         if (tileType == ETileType.Treasure && TreasureCount == 1)
         {

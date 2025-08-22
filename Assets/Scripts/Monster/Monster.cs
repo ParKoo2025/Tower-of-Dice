@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, ICombatant
@@ -12,7 +13,7 @@ public class Monster : MonoBehaviour, ICombatant
     private float _pendingDamage;
 
     public bool IsDead { get; private set; }
-    public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0.0f;
+    public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0.0f && !IsDead; 
 
     public void SetStat(StatScriptable stat)
     {
@@ -28,20 +29,22 @@ public class Monster : MonoBehaviour, ICombatant
 
     public bool TryStartAttack()
     {
-        if (!CanAttack) return false;
+        if (!CanAttack || IsDead) return false;
 
         _isAttacking = true;
         _attackCooldownTimer = _monsterStat.TotalStat[EStatType.AttackSpeed];
 
         _pendingDamage = _monsterStat.TotalStat[EStatType.AttackDamage];
         
-        _monsterAnimator.Play("ATTACK");
-
+        //_monsterAnimator.Play("ATTACK");
+        _monsterAnimator.SetTrigger("2_Attack");
         return true;
     }
 
     public void OnAttackHit()
     {
+        if (IsDead) return;
+        
         CombatManager.Instance.ProcessMonsterAttack(this, _pendingDamage);
     }
 
@@ -55,11 +58,6 @@ public class Monster : MonoBehaviour, ICombatant
         if (IsDead) return;
         
         _monsterStat.TotalStat[EStatType.Health] -= damage;
-
-        if (!_isAttacking)
-        {
-            _monsterAnimator.Play("DAMAGED");
-        }
         
         print($"{name}이 {damage}만큼 피해를 입었습니다. (남은 체력 : {_monsterStat.TotalStat[EStatType.Health]})");
 
@@ -67,8 +65,18 @@ public class Monster : MonoBehaviour, ICombatant
         {
             IsDead = true;
             _isAttacking = false;
+            //_monsterAnimator.Play("DEATH");
             _monsterAnimator.Play("DEATH");
+            _monsterAnimator.ResetTrigger("2_Attack");
         }
+    }
+    
+    public void StopAttack()
+    {
+        if (IsDead) return;
+
+        _isAttacking = false;
+        //_monsterAnimator.Play("IDLE");
     }
 
     private void Awake()
@@ -78,6 +86,8 @@ public class Monster : MonoBehaviour, ICombatant
 
     private void Update()
     {
+        if (IsDead) return;
+        
         if (_attackCooldownTimer > 0.0f)
         {
             _attackCooldownTimer -= Time.deltaTime;

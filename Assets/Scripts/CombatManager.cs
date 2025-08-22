@@ -27,6 +27,14 @@ public class CombatManager : SingletonBehavior<CombatManager>
     {
         _progressCombat = false;
         _battleGround.SetActive(false);
+        
+        _player.StopAttack();
+
+        foreach (var monster in _monsters)
+        {
+            monster.StopAttack();
+            Destroy(monster.gameObject);
+        }
     }
 
     public void ProcessPlayerAttack(float damage, float aocDamage)
@@ -36,9 +44,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
             _monsters.First().TakeDamage(damage);
         }
 
-        foreach (var monster in _monsters)
+        if (aocDamage > 0)
         {
-            if (aocDamage > 0)
+            foreach (var monster in _monsters)
             {
                 monster.TakeDamage(aocDamage);
             }
@@ -67,6 +75,12 @@ public class CombatManager : SingletonBehavior<CombatManager>
         
         // Player 공격 턴
         TryPlayerAttack();
+        
+        if (GameManager.Instance.GameState != GameManager.EGameState.Event)
+            return;
+
+        if (_progressCombat == false)
+            return;
         
         // Monster 공격 턴
         TryMonstersAttack();
@@ -130,12 +144,13 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             _monsters.Remove(monster);
             print($"{monster.name} 사망");
-            Destroy(monster.gameObject);
+            Destroy(monster.gameObject, 2f);
         }
 
         if (_monsters.Count == 0)
         {
             GameManager.Instance.OnBattleEnd(true);
+            _player.StopAttack();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : SingletonBehavior<GameManager>
@@ -19,23 +20,23 @@ public class GameManager : SingletonBehavior<GameManager>
         
         // 각 타일마다 이벤트를 진행하는 상태
         Event,
+        
+        // 타일 이벤트 마무리 상태
+        EndEvent,
     }
 
     public EGameState GameState { get; set; } = EGameState.Init;
 
     public void OnBattleEnd(bool isPlayerWin)
     {
-        CombatManager.Instance.EndBattle();
+        GameState = EGameState.EndEvent;
         
         if (isPlayerWin)
             OnPlayerBattleWin();
         else
             OnPlayerBattleLose();
-        
-        TileManager.Instance.ResetPlayerPosition();
-        TileManager.Instance.ResetTile();
 
-        GameState = EGameState.Idle;
+        StartCoroutine(WaitForCombatEnding());
     }
     
     private void Update()
@@ -98,5 +99,21 @@ public class GameManager : SingletonBehavior<GameManager>
     private void OnPlayerBattleLose()
     {
         
+    }
+
+    private IEnumerator WaitForCombatEnding()
+    {
+        yield return new WaitForSeconds(2f);
+        ProcessCombatEnding();
+    }
+
+    private void ProcessCombatEnding()
+    {
+        CombatManager.Instance.EndBattle();
+        
+        TileManager.Instance.ResetPlayerPosition();
+        TileManager.Instance.ResetTile();
+
+        GameState = EGameState.Idle;
     }
 }

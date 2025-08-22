@@ -7,4 +7,5 @@ public interface ICombatant
     public void OnAttackHit();
     public void OnAttackComplete();
     public void TakeDamage(float damage);
+    public void StopAttack();
 }

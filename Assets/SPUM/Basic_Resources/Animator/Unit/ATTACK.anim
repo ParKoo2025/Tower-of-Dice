@@ -5459,7 +5459,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5
+  - time: 0.48333332
     functionName: OnAttackComplete
     data: 
     objectReferenceParameter: {fileID: 7548139898082791852, guid: e0877d8ceaf7f584abb5a2f06f42b34d,
