@@ -103,10 +103,10 @@ TextureImporter:
       name: Roulette_Middle_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 99
-        width: 352
-        height: 352
+        x: 0
+        y: 0
+        width: 350
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -7,6 +7,8 @@ public class GameManager : SingletonBehavior<GameManager>
     [SerializeField] private EDiceType _leftDice = EDiceType.Basic;
     [SerializeField] private EDiceType _rightDice = EDiceType.Basic;
 
+    public int CurFloor { get; set; } = 1;
+
     public enum EGameState
     {
         // 초기화 단계

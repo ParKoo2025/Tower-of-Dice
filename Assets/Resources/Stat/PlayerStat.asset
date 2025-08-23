@@ -15,13 +15,13 @@ MonoBehaviour:
   _stats:
     statsData:
     - Name: Health
-      Value: 150
+      Value: 100
     - Name: HealthRegen
       Value: 0
     - Name: HealthStealRate
       Value: 0
     - Name: AttackDamage
-      Value: 20
+      Value: 10
     - Name: AttackSpeed
       Value: 0.5
     - Name: AocDamage

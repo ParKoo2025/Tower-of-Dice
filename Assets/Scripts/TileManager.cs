@@ -137,6 +137,7 @@ public class TileManager : SingletonBehavior<TileManager>
             // 코드 분리
             if (nxt == 0)
             {
+                GameManager.Instance.CurFloor++;
                 foreach (var tile in _tiles)
                 {
                     tile.UpdateTile();
