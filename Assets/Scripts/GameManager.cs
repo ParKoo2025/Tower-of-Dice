@@ -6,6 +6,8 @@ public class GameManager : SingletonBehavior<GameManager>
 {
     [SerializeField] private EDiceType _leftDice = EDiceType.Basic;
     [SerializeField] private EDiceType _rightDice = EDiceType.Basic;
+    
+    [SerializeField] private Equipment[] _equipmentPrefab;
 
     public int CurFloor { get; set; } = 1;
 
@@ -68,7 +70,12 @@ public class GameManager : SingletonBehavior<GameManager>
         else if (Input.GetKeyDown(KeyCode.Alpha8))
             moveCount = 8;
         else if (Input.GetKeyDown(KeyCode.Alpha9))
-            moveCount = 9;
+            moveCount = 10;
+        // 장비 테스트
+        else if (Input.GetKeyDown(KeyCode.W))
+            SpawnEquipment(0);
+        else if (Input.GetKeyDown(KeyCode.I))
+            SpawnEquipment(1);
         
         else if (Input.GetKeyDown(KeyCode.A))
         {
@@ -94,6 +101,22 @@ public class GameManager : SingletonBehavior<GameManager>
             GameState = EGameState.Move;
             TileManager.Instance.MovePlayer(moveCount);
         }
+    }
+    
+    // 장비 테스트
+    private void SpawnEquipment(int idx)
+    {
+        if (_equipmentPrefab == null || Camera.main == null) return;
+
+        Vector3 spawnPos;
+        
+        var screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
+        spawnPos = Camera.main.ScreenToWorldPoint(screenCenter);
+        spawnPos.z = -1f; // 2D면 Z=0
+        
+
+        var eq = Instantiate(_equipmentPrefab[idx], spawnPos, Quaternion.identity);
+        eq.transform.localScale *= 2f;
     }
     
     private void OnPlayerBattleWin()
