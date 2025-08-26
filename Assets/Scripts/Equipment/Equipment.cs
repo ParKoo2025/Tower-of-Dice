@@ -61,11 +61,6 @@ public class Equipment : MonoBehaviour
     public void SetLevel(int level)
     {
         _equipmentLevel = level;
-        RefreshTMP();
-    }
-
-    private void RefreshTMP()
-    {
         _equipmentLevelTMP.text = _equipmentLevel.ToString();
     }
     
