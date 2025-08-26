@@ -27,17 +27,35 @@ public class Equipment : MonoBehaviour
     [SerializeField]
     private Sprite _equipmentIcon;
     
+    private Stat _finalStat = new Stat();
+    
     public StatScriptable Stat => _stat;
     public int EquipmentLevel => _equipmentLevel;
     public EEquipmentType EquipmentType => _equipmentType;
     public Sprite EquipmentIcon => _equipmentIcon;
+    public Stat FinalStat => _finalStat;
 
     private void Awake()
     {
         int curFloor = GameManager.Instance.CurFloor;
         SetLevel(curFloor);
+        ApplyFloorPenalty();
         var sr = GetComponent<SpriteRenderer>();
         sr.sprite = _equipmentIcon;
+    }
+    
+    public void ApplyFloorPenalty()
+    {
+        int curFloor = GameManager.Instance.CurFloor;
+        
+        float penaltyRate = 1f - ((curFloor - _equipmentLevel) * 0.1f);
+
+        if (penaltyRate < 0f) penaltyRate = 0f; // 최소 0
+
+        for (int i = 0; i < (int)EStatType.Size; i++)
+        {
+            _finalStat[(EStatType)i] = _stat[(EStatType)i] * penaltyRate;
+        }
     }
 
     public void SetLevel(int level)
@@ -56,13 +74,14 @@ public class Equipment : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-                return; // UI 위 클릭 무시(선택)
+                return;
 
             var player = FindObjectOfType<PlayerStat>();
             if (player == null) return;
 
             player.SetEquipment(this);
 
+            // 수정 필요
             var go = GameObject.Find("WeaponLoc");
             var t = go.transform;
             transform.SetParent(t, worldPositionStays: false);

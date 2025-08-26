@@ -141,6 +141,11 @@ public class TileManager : SingletonBehavior<TileManager>
             if (nxt == 0)
             {
                 GameManager.Instance.CurFloor++;
+                
+                // 장비 다시 계산
+                var playerStat = _player.GetComponent<PlayerStat>();
+                playerStat.ReCalculateEquipmentStats();
+                
                 foreach (var tile in _tiles)
                 {
                     tile.UpdateTile();
