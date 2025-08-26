@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DamageController : MonoBehaviour
 {
@@ -41,7 +42,9 @@ public class DamageController : MonoBehaviour
 
         text.text = $"{value}";
         
-        text.transform.position = damagedTransform.position + Vector3.up * 5;
+        
+        Vector3 randomOffset = Random.insideUnitCircle * new Vector2(1f, 5f) + new Vector2(0f, 5f); 
+        text.transform.position = damagedTransform.position + randomOffset;
         text.DOFade(1f, 0f);
         text.gameObject.SetActive(true);
         
