@@ -31,6 +31,19 @@ public class PlayerStat : MonoBehaviour
             TotalStat[(EStatType)i] = _basicStat[(EStatType)i];
         }
     }
+
+    public void ReCalculateEquipmentStats()
+    {
+        for (int j = 0; j < (int)EEquipmentType.Size; ++j)
+        {
+            if (_equipped[j] != null)
+            {
+                SubtractEquipmentStat(j);
+                _equipped[j].ApplyFloorPenalty();
+                AddEquipmentStat(j);
+            }
+        }
+    }
     
     /// <summary>
     /// TotalStat을 계산한다.
@@ -39,7 +52,7 @@ public class PlayerStat : MonoBehaviour
     {
         for (int i = 0; i < (int)EStatType.Size; i++)
         {
-            TotalStat[(EStatType)i] += _equipped[idx].Stat[(EStatType)i];
+            TotalStat[(EStatType)i] += _equipped[idx].FinalStat[(EStatType)i];
         }
     }
     
@@ -47,7 +60,7 @@ public class PlayerStat : MonoBehaviour
     {
         for (int i = 0; i < (int)EStatType.Size; i++)
         {
-            TotalStat[(EStatType)i] -= _equipped[idx].Stat[(EStatType)i];
+            TotalStat[(EStatType)i] -= _equipped[idx].FinalStat[(EStatType)i];
         }
     }
 }

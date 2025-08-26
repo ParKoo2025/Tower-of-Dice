@@ -108,7 +108,7 @@ public class GameManager : SingletonBehavior<GameManager>
         
         var screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
         spawnPos = Camera.main.ScreenToWorldPoint(screenCenter);
-        spawnPos.z = -1f; // 2D면 Z=0
+        spawnPos.z = -1f;
         
 
         var eq = Instantiate(_equipmentPrefab[idx], spawnPos, Quaternion.identity);
