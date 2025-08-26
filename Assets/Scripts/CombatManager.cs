@@ -12,6 +12,8 @@ public class CombatManager : SingletonBehavior<CombatManager>
     
     private bool _progressCombat = false;
 
+    public event Action<Transform, float> OnDamaged;
+
     public void StartBattle(List<GameObject> monsters)
     {
         _battleGround.SetActive(true);
@@ -41,6 +43,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
     {
         if (_monsters.Count > 0)
         {
+            OnDamaged?.Invoke(_monsters.First().transform, damage);
             _monsters.First().TakeDamage(damage);
         }
 
@@ -48,6 +51,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             foreach (var monster in _monsters)
             {
+                OnDamaged?.Invoke(monster.transform, damage);
                 monster.TakeDamage(aocDamage);
             }
         }
@@ -57,6 +61,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void ProcessMonsterAttack(Monster attacker, float damage)
     {
+        OnDamaged?.Invoke(_player.transform, damage);
         _player.TakeDamage(damage);
 
         if (_player.IsDead)
