@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: dab82dbe98e39be4290bd0d1c279531e
+guid: 71e9e15f21e42e8409b4742c9e010786
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3170333647755127864
-    second: Roulette_Pin_0
+      213: 4534561509225756176
+    second: Roulette_Background 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Roulette_Pin_0
+      name: Roulette_Background 1_0
       rect:
         serializedVersion: 2
-        x: 449
-        y: 679
-        width: 92
-        height: 122
+        x: 0
+        y: 0
+        width: 950
+        height: 1031
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c356123856b004d0800000000000000
-      internalID: -3170333647755127864
+      spriteID: 0167f81eaaffdee30800000000000000
+      internalID: 4534561509225756176
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Roulette_Pin_0: -3170333647755127864
+      Roulette_Background 1_0: 4534561509225756176
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
