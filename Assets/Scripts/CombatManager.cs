@@ -100,6 +100,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
         _player.transform.position = new Vector3(-1f, 0f, 0f);
         _player.transform.localScale = new Vector3(-1f, 1f, 1f);
         _player.Init();
+
+        var hp = HPFactory.GetHpController();
+        
     }
     
     private void RegisterMonster(List<GameObject> monsters)

@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour, ICombatant
 
     private float _pendingDamage;
 
+    public event Action<float, float> OnHPChanged;
     public bool IsDead { get; private set; }
     public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0.0f && !IsDead; 
 

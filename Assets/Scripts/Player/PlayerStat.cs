@@ -7,6 +7,7 @@ public class PlayerStat : MonoBehaviour
     [SerializeField] private StatScriptable _basicStat;
     [SerializeField] private List<Equipment> _equipment = new List<Equipment>();
 
+    public Stat CurrentStat { get; private set; } = new Stat();
     public Stat TotalStat { get; private set; } = new Stat();
 
     public void SetEquipment(Equipment eq)
@@ -18,6 +19,7 @@ public class PlayerStat : MonoBehaviour
     private void Start()
     {
         CalculateStat();
+        
     }
     
     /// <summary>

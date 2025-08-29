@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class DamageController : MonoBehaviour
+public class DamageManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _damageText;
     

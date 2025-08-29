@@ -1,5 +1,8 @@
+using System;
+
 public interface ICombatant
 {
+    public event Action<float, float> OnHPChanged;
     public bool IsDead { get; }
     public bool CanAttack { get; }
     public void Init();

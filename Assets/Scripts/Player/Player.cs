@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, ICombatant
 
     private float _pendingDamage = 0.0f;
     private float _pendingAocDamage = 0.0f;
-    
+    public event Action<float, float> OnHPChanged;
     public bool IsDead { get; private set; }
     public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0f && !IsDead;
 
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour, ICombatant
         _attackCooldownTimer = _playerStat.TotalStat[EStatType.AttackSpeed];
         _isAttacking = false;
         IsDead = false;
+        
     }
 
     public bool TryStartAttack()
