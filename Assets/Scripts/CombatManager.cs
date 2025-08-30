@@ -18,10 +18,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
     {
         _battleGround.SetActive(true);
         
+        Camera.main.transform.SetParent(_battleGround.transform, false);
         RegisterPlayer();
         RegisterMonster(monsters); 
         
-        Camera.main.transform.SetParent(_battleGround.transform);
         _progressCombat = true;
     }
 
@@ -31,7 +31,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
         _battleGround.SetActive(false);
         
         _player.StopAttack();
-
         foreach (var monster in _monsters)
         {
             monster.StopAttack();
@@ -95,14 +94,11 @@ public class CombatManager : SingletonBehavior<CombatManager>
     private void RegisterPlayer()
     {
         _player = TileManager.Instance.Player.GetComponent<Player>();
-        
-        _player.transform.SetParent(_battleGround.transform);
+        _player.transform.SetParent(_battleGround.transform, false);
         _player.transform.position = new Vector3(-1f, 0f, 0f);
-        _player.transform.localScale = new Vector3(-1f, 1f, 1f);
+        _player.transform.localScale = Vector3.one;
+        _player.transform.GetChild(0).transform.localScale = new Vector3(-1f, 1f, 1f);
         _player.Init();
-
-        var hp = HPFactory.GetHpController();
-        
     }
     
     private void RegisterMonster(List<GameObject> monsters)
@@ -110,10 +106,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
         _monsters = new List<Monster>();
         for (int i = 0; i < monsters.Count; i++)
         {
-            GameObject monster = Instantiate(monsters[i], _battleGround.transform);
-            monster.transform.localPosition = new Vector3(0.5f * (i + 1), 0.5f * (i % 2 - 1), 6);
-            _monsters.Add(monster.GetComponent<Monster>());
-            monster.GetComponent<Monster>().Init();
+            var monster = Instantiate(monsters[i], _battleGround.transform, false).GetComponent<Monster>();
+            monster.transform.localPosition = new Vector3(0.5f * (i + 1), 0.5f * (i % 2 - 1), -1f);
+            _monsters.Add(monster);
+            monster.Init();
         }
     }
 
@@ -152,7 +148,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             _monsters.Remove(monster);
             print($"{monster.name} 사망");
-            Destroy(monster.gameObject, 2f);
+           Destroy(monster.gameObject, 2f);
         }
 
         if (_monsters.Count == 0)
@@ -161,4 +157,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
             _player.StopAttack();
         }
     }
+
+
 }

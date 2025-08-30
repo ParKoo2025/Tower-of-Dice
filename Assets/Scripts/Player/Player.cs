@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour, ICombatant
 {
     [SerializeField] private Animator _playerAnimator;
-    
+    [SerializeField] private HPController _hpController;
     private PlayerStat _playerStat;
     
     private float _attackCooldownTimer = 0.0f;
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour, ICombatant
 
     private float _pendingDamage = 0.0f;
     private float _pendingAocDamage = 0.0f;
-    public event Action<float, float> OnHPChanged;
+    
     public bool IsDead { get; private set; }
     public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0f && !IsDead;
 
@@ -21,7 +22,10 @@ public class Player : MonoBehaviour, ICombatant
         _attackCooldownTimer = _playerStat.TotalStat[EStatType.AttackSpeed];
         _isAttacking = false;
         IsDead = false;
-        
+        _hpController.SetHealth(_playerStat.CurrentHealth, _playerStat.TotalStat[EStatType.Health]);
+        _hpController.SetAttackSpeed(Mathf.Max(0f, _attackCooldownTimer), _playerStat.TotalStat[EStatType.AttackSpeed]);
+        _hpController.gameObject.SetActive(true);
+
     }
 
     public bool TryStartAttack()
@@ -57,11 +61,12 @@ public class Player : MonoBehaviour, ICombatant
     {
         if (IsDead) return;
 
-        _playerStat.TotalStat[EStatType.Health] -= damage;
-        
+        _playerStat.CurrentHealth -= damage;
+        _hpController.SetHealth(_playerStat.CurrentHealth, _playerStat.TotalStat[EStatType.Health]);
+
         print($"{name}이 {damage}만큼 피해를 입었습니다. (남은 체력 : {_playerStat.TotalStat[EStatType.Health]})");
 
-        if (_playerStat.TotalStat[EStatType.Health] <= 0.0f)
+        if (_playerStat.CurrentHealth <= 0.0f)
         {
             IsDead = true;
             _isAttacking = false;
@@ -79,6 +84,7 @@ public class Player : MonoBehaviour, ICombatant
         if (IsDead) return;
 
         _isAttacking = false;
+        _hpController.gameObject.SetActive(false);
         //_playerAnimator.Play("IDLE");
     }
 
@@ -94,6 +100,8 @@ public class Player : MonoBehaviour, ICombatant
         if (_attackCooldownTimer > 0.0f)
         {
             _attackCooldownTimer -= Time.deltaTime;
+            _hpController.SetAttackSpeed(Mathf.Max(0f, _attackCooldownTimer), _playerStat.TotalStat[EStatType.AttackSpeed]);
+
         }
     }
 }

@@ -1,20 +1,20 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HPController : MonoBehaviour
 {
-    [SerializeField] private Image _hpUp;
-    [SerializeField] private Image _hpDown;
-    
-    private float _totalHP;
-    private float _currentHP;
-    
-    public void SetHP(float currentHP, float totalHP)
-    {
-        _totalHP = totalHP;
-        _currentHP = currentHP;
+    [SerializeField] private Transform _hpUp;
+    [SerializeField] private Transform _hpDown;
 
-        _hpUp.fillAmount = _currentHP / _totalHP;
+    public void SetHealth(float currentHP, float totalHP)
+    {
+        _hpUp.DOScaleX(Mathf.Clamp01(currentHP / totalHP), 0.1f);
+    }
+
+    public void SetAttackSpeed(float currentSpeed, float totalSpeed)
+    {
+        _hpDown.DOScaleX(Mathf.Clamp01(currentSpeed / totalSpeed), 0f);
     }
 
 }

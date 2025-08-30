@@ -35,11 +35,13 @@ public class TileManager : SingletonBehavior<TileManager>
     public void ResetPlayerPosition()
     {
         _player.transform.SetParent(_tiles[_playerPosition].transform, false);
-        
+
+
+        _player.transform.localScale = new Vector3(5f, 5f, 5f);
         if (_playerPosition > 10 && _playerPosition <= 30)
-            _player.transform.localScale = new Vector3(-5.0f, 5.0f, 5.0f);
+            _player.transform.GetChild(0).transform.localScale = new Vector3(-1f, 1f, 1f);
         else
-            _player.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+            _player.transform.GetChild(0).transform.localScale = Vector3.one;
         
         _mainCamera.transform.SetParent(_player.transform, false);
         _mainCamera.transform.localPosition = new Vector3(0.0f, 0.0f, -10.0f);
@@ -108,8 +110,8 @@ public class TileManager : SingletonBehavior<TileManager>
             
             // 이동 방향 계산하여 캐릭터 방향 결정
             Vector3 delta = nxtTransform.position - curTransform.position;
-            if (delta.x > 0) _player.transform.localScale = new Vector3(-5f, 5f, 5f);
-            else _player.transform.localScale = new Vector3(5f, 5f, 5f);
+            if (delta.x > 0) _player.transform.GetChild(0).transform.localScale = new Vector3(-1f, 1f, 1f);
+            else _player.transform.GetChild(0).transform.localScale = new Vector3(1f, 1f, 1f);
     
             // 포물선 형태로 이동
             float elapsed = 0f;

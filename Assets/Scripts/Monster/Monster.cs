@@ -1,10 +1,9 @@
-using System;
-using NUnit.Framework;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, ICombatant
 {
     [SerializeField] private Animator _monsterAnimator;
+    [SerializeField] private HPController _hpController;
     private MonsterStat _monsterStat;
     
     private float _attackCooldownTimer = 0.0f;
@@ -12,7 +11,6 @@ public class Monster : MonoBehaviour, ICombatant
 
     private float _pendingDamage;
 
-    public event Action<float, float> OnHPChanged;
     public bool IsDead { get; private set; }
     public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0.0f && !IsDead; 
 
@@ -25,7 +23,11 @@ public class Monster : MonoBehaviour, ICombatant
     {
         _attackCooldownTimer = _monsterStat.TotalStat[EStatType.AttackSpeed];
         _isAttacking = false;
-        IsDead = false;    
+        IsDead = false;
+        
+        _hpController.SetHealth(_monsterStat.CurrentHealth, _monsterStat.TotalStat[EStatType.Health]);
+        _hpController.SetAttackSpeed(Mathf.Max(0f, _attackCooldownTimer), _monsterStat.TotalStat[EStatType.AttackSpeed]);
+
     }
 
     public bool TryStartAttack()
@@ -58,11 +60,12 @@ public class Monster : MonoBehaviour, ICombatant
     {
         if (IsDead) return;
         
-        _monsterStat.TotalStat[EStatType.Health] -= damage;
-        
+        _monsterStat.CurrentHealth -= damage;
+        _hpController.SetHealth(_monsterStat.CurrentHealth, _monsterStat.TotalStat[EStatType.Health]);
+
         print($"{name}이 {damage}만큼 피해를 입었습니다. (남은 체력 : {_monsterStat.TotalStat[EStatType.Health]})");
 
-        if (_monsterStat.TotalStat[EStatType.Health] <= 0.0f)
+        if (_monsterStat.CurrentHealth <= 0.0f)
         {
             IsDead = true;
             _isAttacking = false;
@@ -92,6 +95,8 @@ public class Monster : MonoBehaviour, ICombatant
         if (_attackCooldownTimer > 0.0f)
         {
             _attackCooldownTimer -= Time.deltaTime;
+            _hpController.SetAttackSpeed(Mathf.Max(0f, _attackCooldownTimer), _monsterStat.TotalStat[EStatType.AttackSpeed]);
+
         }
     }
 }
