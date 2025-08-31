@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 4012671599545558540}
   - component: {fileID: 375441571111099364}
   m_Layer: 5
-  m_Name: Piece
+  m_Name: RoulettePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

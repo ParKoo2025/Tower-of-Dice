@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
+using System.ComponentModel.Design;
 using UnityEngine;
+using Quaternion = System.Numerics.Quaternion;
 
 public class GameManager : SingletonBehavior<GameManager>
 {
     [SerializeField] private EDiceType _leftDice = EDiceType.Basic;
     [SerializeField] private EDiceType _rightDice = EDiceType.Basic;
     
-    [SerializeField] private Equipment[] _equipmentPrefab;
-
     public int CurFloor { get; set; } = 1;
 
     public enum EGameState
@@ -73,9 +73,7 @@ public class GameManager : SingletonBehavior<GameManager>
             moveCount = 10;
         // 장비 테스트
         else if (Input.GetKeyDown(KeyCode.W))
-            SpawnEquipment(0);
-        else if (Input.GetKeyDown(KeyCode.I))
-            SpawnEquipment(1);
+            SpawnEquipment();
         
         else if (Input.GetKeyDown(KeyCode.A))
         {
@@ -104,18 +102,17 @@ public class GameManager : SingletonBehavior<GameManager>
     }
     
     // 장비 테스트
-    private void SpawnEquipment(int idx)
+    private void SpawnEquipment()
     {
-        if (_equipmentPrefab == null || Camera.main == null) return;
-
         Vector3 spawnPos;
         
         var screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
         spawnPos = Camera.main.ScreenToWorldPoint(screenCenter);
         spawnPos.z = -1f;
-        
 
-        var eq = Instantiate(_equipmentPrefab[idx], spawnPos, Quaternion.identity);
+
+        var eq = EquipmentManager.Instance.SpawnRandom();
+        eq.transform.position = spawnPos;
         eq.transform.localScale *= 2f;
     }
     
