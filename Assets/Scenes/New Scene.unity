@@ -398,6 +398,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192343839}
   m_CullTransparentMesh: 1
+--- !u!1 &234712069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234712071}
+  - component: {fileID: 234712070}
+  - component: {fileID: 234712072}
+  m_Layer: 0
+  m_Name: EquipmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &234712070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234712069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcbd5d259d999142985954255632b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weightedRarity:
+  - Rarity: 0
+    Weight: 45
+  - Rarity: 1
+    Weight: 30
+  - Rarity: 2
+    Weight: 15
+  - Rarity: 3
+    Weight: 7
+  - Rarity: 4
+    Weight: 2
+  - Rarity: 5
+    Weight: 1
+  _typeConfigs:
+  - Type: 0
+    TypeWeight: 1
+    SubKinds:
+    - Id: 0
+      Weight: 1
+    - Id: 1
+      Weight: 1
+  _canvas: {fileID: 425254335}
+--- !u!4 &234712071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234712069}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.35698, y: -0.90462, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &234712072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234712069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d4d22d42d5ad846978dc9b5e5c9e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseEquipment: {fileID: 5788721296078943592, guid: 0a5088d7e22a6414093ea79d448aecf9,
+    type: 3}
 --- !u!1 &293263572
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,9 +850,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftDice: 0
   _rightDice: 0
-  _equipmentPrefab:
-  - {fileID: 5804657282603597237, guid: c156a0d52998d6048a1aa294d4cb58f4, type: 3}
-  - {fileID: 5804657282603597237, guid: d435616b5bc1b8c49b04cd1a398003b2, type: 3}
 --- !u!114 &483245402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1508,3 +1586,4 @@ SceneRoots:
   - {fileID: 418061982}
   - {fileID: 293263574}
   - {fileID: 425254336}
+  - {fileID: 234712071}
