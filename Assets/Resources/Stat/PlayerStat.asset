@@ -27,7 +27,7 @@ MonoBehaviour:
     - Name: AocDamage
       Value: 10
     - Name: CriticalRate
-      Value: 0
+      Value: 10
     - Name: CriticalMultiplier
       Value: 0
     - Name: Defence

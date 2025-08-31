@@ -63,7 +63,7 @@ public class Monster : MonoBehaviour, ICombatant
         _monsterStat.CurrentHealth -= damage;
         _hpController.SetHealth(_monsterStat.CurrentHealth, _monsterStat.TotalStat[EStatType.Health]);
 
-        print($"{name}이 {damage}만큼 피해를 입었습니다. (남은 체력 : {_monsterStat.TotalStat[EStatType.Health]})");
+        print($"{name}이 {damage}만큼 피해를 입었습니다. (남은 체력 : {_monsterStat.CurrentHealth})");
 
         if (_monsterStat.CurrentHealth <= 0.0f)
         {

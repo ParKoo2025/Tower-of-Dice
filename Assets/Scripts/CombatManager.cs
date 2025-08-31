@@ -38,8 +38,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
         }
     }
 
-    public void ProcessPlayerAttack(float damage, float aocDamage)
+    public int ProcessPlayerAttack(float damage, float aocDamage)
     {
+        int aocCount = 0;
         if (_monsters.Count > 0)
         {
             OnDamaged?.Invoke(_monsters.First().transform, damage);
@@ -52,10 +53,12 @@ public class CombatManager : SingletonBehavior<CombatManager>
             {
                 OnDamaged?.Invoke(monster.transform, damage);
                 monster.TakeDamage(aocDamage);
+                aocCount++;
             }
         }
 
         ProcessDeadMonsters();
+        return aocCount;
     }
 
     public void ProcessMonsterAttack(Monster attacker, float damage)
