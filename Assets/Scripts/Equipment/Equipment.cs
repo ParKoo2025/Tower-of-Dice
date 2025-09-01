@@ -13,7 +13,7 @@ public enum EEquipmentType
     Size
 }
 
-public class Equipment : MonoBehaviour
+public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("UI")]
     [SerializeField]
@@ -26,19 +26,32 @@ public class Equipment : MonoBehaviour
     private int _equipmentLevel;
     [SerializeField]
     private EEquipmentType _equipmentType;
+
+    private ERarity _rarity;
     
     private Image _raritySprite;
     [SerializeField]
     private Image _equipmentSprite;
     
     private Stat _finalStat = new Stat();
+    
+    private bool isEquipped = false;
 
+    public bool IsEquipped
+    {
+        get { return isEquipped; }
+        set { isEquipped = value; }
+    }
+    public ERarity Rarity
+    {
+        get { return _rarity; }
+        set { _rarity = value; }
+    }
     public Sprite RaritySprite
     {
         get { return _raritySprite.sprite; }
         set { _raritySprite.sprite = value; }
     }
-
     public Sprite EquipmentSprite
     {
         get { return _equipmentSprite.sprite; }
@@ -90,32 +103,66 @@ public class Equipment : MonoBehaviour
         _equipmentLevel = level;
         _equipmentLevelTMP.text = _equipmentLevel.ToString();
     }
-    
-    public void OnPointerClick(PointerEventData eventData)
+
+    public void OnDestroyEquipment()
     {
-        if (eventData == null) return;
-
-        // 우클릭만 반응
-        if (eventData.button != PointerEventData.InputButton.Right) return;
-
-        // UI 위 클릭 필터는 EventSystem이 이미 처리하므로 별도 체크 불필요
-        var player = FindObjectOfType<PlayerStat>();
-        if (player == null) return;
-
-        player.SetEquipment(this);
-
-        // WeaponLoc로 붙이기 (UI 슬롯 가정)
-        var go = GameObject.Find("WeaponLoc");
-        if (go == null)
+        switch (_rarity)
         {
-            Debug.LogWarning("[Equipment] WeaponLoc not found.");
-            return;
+            case ERarity.Common:
+                Debug.Log($"[Equipment] 파괴됨 (Common): {name}");
+                break;
+            case ERarity.Uncommon:
+                Debug.Log($"[Equipment] 파괴됨 (Uncommon): {name}");
+                break;
+            case ERarity.Rare:
+                Debug.Log($"[Equipment] 파괴됨 (Rare): {name}");
+                break;
+            case ERarity.Epic:
+                Debug.Log($"[Equipment] 파괴됨 (Epic): {name}");
+                break;
+            case ERarity.Legendary:
+                Debug.Log($"[Equipment] 파괴됨 (Legendary): {name}");
+                break;
+            case ERarity.Mythic:
+                Debug.Log($"[Equipment] 파괴됨 (Mythic): {name}");
+                break;
+            default:
+                Debug.Log($"[Equipment] 파괴됨 (Unknown): {name}");
+                break;
         }
 
-        var t = go.transform;
-        transform.SetParent(t, worldPositionStays: false);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        Destroy(gameObject);
+    }
+    
+    //장비 드래그 & 드롭
+
+    private Vector3 DefaultPos;
+
+    void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
+    {
+        if (!isEquipped)
+        {
+            DefaultPos = transform.position;
+            GetComponent<Image>().raycastTarget = false;
+        }
+    }
+
+    void IDragHandler.OnDrag(PointerEventData eventData)
+    {
+        if (!isEquipped)
+        {
+            Vector3 curPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            transform.position = curPos;
+        }
+    }
+
+    void IEndDragHandler.OnEndDrag(PointerEventData eventData)
+    {
+        if (!isEquipped)
+        {
+            transform.position = DefaultPos;
+            GetComponent<Image>().raycastTarget = true;
+        }
     }
 }
 

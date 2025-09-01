@@ -21,6 +21,7 @@ public class PlayerStat : MonoBehaviour
     private void UnEquip(int idx)
     {
         SubtractEquipmentStat(idx);
+        _equipped[idx].OnDestroyEquipment();
         _equipped[idx] = null;
     }
 

@@ -102,14 +102,12 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         Vector3 spawnPos;
         
-        var screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-        spawnPos = Camera.main.ScreenToWorldPoint(screenCenter);
-        spawnPos.z = -1f;
+        var screenCenter = new Vector3(0f, 0f, 0f);
 
 
         var eq = EquipmentManager.Instance.SpawnRandom();
-        eq.transform.position = spawnPos;
-        eq.transform.localScale *= 2f;
+        eq.transform.position = screenCenter;
+        eq.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
     }
     
     private void OnPlayerBattleWin()

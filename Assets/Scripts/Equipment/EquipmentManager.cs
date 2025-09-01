@@ -90,9 +90,9 @@ public class EquipmentManager : SingletonBehavior<EquipmentManager>
         }
         eq.EquipmentType = type;
         eq.Stat = _equipmentStats[subKind];
+        eq.Rarity = rarity;
         
-        eq.transform.SetParent(_canvas.transform, false); 
-
+        eq.transform.SetParent(_canvas.transform, false);
         return eq;
     }
     
