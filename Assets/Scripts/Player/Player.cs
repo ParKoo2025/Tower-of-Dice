@@ -9,44 +9,25 @@ public class Player : MonoBehaviour, ICombatant
     [SerializeField] private HPController _hpController;
     private PlayerStat _playerStat;
     
-    private float _attackCooldownTimer = 0.0f;
     private float _healthRegenCooldownTimer = 0.0f;
-    private bool _isAttacking = false;
-
-    private float _pendingDamage = 0.0f;
-    private float _pendingAocDamage = 0.0f;
-
-    private bool _progressCombat;
+    
+    private bool _isAttacking;
     
     public bool IsDead { get; private set; }
-    public bool CanAttack => !_isAttacking && _attackCooldownTimer <= 0f && !IsDead;
 
-    public void Init()
+    public void StartAttack()
     {
-        _attackCooldownTimer = _playerStat.TotalStat[EStatType.AttackSpeed];
         _healthRegenCooldownTimer = 1.0f;
-        _isAttacking = false;
         IsDead = false;
 
         _hpController.SetHealth(_playerStat.CurrentHealth, _playerStat.TotalStat[EStatType.Health]);
-        _hpController.SetAttackSpeed(Mathf.Max(0f, _attackCooldownTimer), _playerStat.TotalStat[EStatType.AttackSpeed]);
+        _hpController.SetAttackSpeed(0f, 1f);
         _hpController.gameObject.SetActive(true);
-        _progressCombat = true;
-    }
-
-    public bool TryStartAttack()
-    {
-        if (!CanAttack || IsDead) return false;
-
         _isAttacking = true;
-        _attackCooldownTimer = _playerStat.TotalStat[EStatType.AttackSpeed];
-
-        _pendingDamage = CalculateAttackDamage();
-        _pendingAocDamage = _playerStat.TotalStat[EStatType.AocDamage];
         
-        //_playerAnimator.Play("ATTACK");
-        _playerAnimator.SetTrigger("2_Attack");
-        return true;
+        _playerAnimator.speed = 1f / _playerStat.TotalStat[EStatType.AttackSpeed];
+        
+        _playerAnimator.Play("ATTACK");
     }
 
     public void OnAttackHit()
@@ -54,19 +35,17 @@ public class Player : MonoBehaviour, ICombatant
         if (IsDead) return;
         
         print("player OnAttackHit");
-        int aocCount = CombatManager.Instance.ProcessPlayerAttack(_pendingDamage, _pendingAocDamage);
+
+        float damage = CalculateAttackDamage();
+        float aocDamage = _playerStat.TotalStat[EStatType.AocDamage];
+        
+        int aocCount = CombatManager.Instance.ProcessPlayerAttack(damage, aocDamage);
 
         // TODO
         // 체력 회복 효과
-        float healthSteal = (_pendingDamage + _pendingAocDamage * aocCount) *
+        float healthSteal = (damage + aocDamage * aocCount) *
                             (_playerStat.TotalStat[EStatType.HealthStealRate] / 100f);
         ChangeHealth(healthSteal);
-    }
-
-    public void OnAttackComplete()
-    {
-        print("player OnAttackComplete");
-        _isAttacking = false;
     }
     
     public void TakeDamage(float damage)
@@ -83,10 +62,11 @@ public class Player : MonoBehaviour, ICombatant
 
         print($"{name}이 {damage}만큼 피해를 입었습니다. (남은 체력 : {_playerStat.CurrentHealth})");
 
+        // 사망 판정
         if (_playerStat.CurrentHealth <= 0.0f)  
         {
             IsDead = true;
-            _isAttacking = false;
+
             // 죽는 애니메이션 트리거 설정
             _playerAnimator.Play("DEATH");
             
@@ -98,18 +78,17 @@ public class Player : MonoBehaviour, ICombatant
         // 반격이 이게 맞나?
         if (isCounterAttack)
         {
-            _attackCooldownTimer = 0f;
+            // 일단 반격 스킵
         } 
     }
 
     public void StopAttack()
     {
-        _progressCombat = false;
+        _isAttacking = false;
         if (IsDead) return;
 
-        _isAttacking = false;
         _hpController.gameObject.SetActive(false);
-        //_playerAnimator.Play("IDLE");
+        _playerAnimator.Play("IDLE");
     }
 
     private void Awake()
@@ -120,14 +99,10 @@ public class Player : MonoBehaviour, ICombatant
     private void Update()
     {
         if (IsDead) return;
-        if (!_progressCombat) return;
-        
-        if (_attackCooldownTimer > 0.0f)
-        {
-            _attackCooldownTimer -= Time.deltaTime;
-            _hpController.SetAttackSpeed(Mathf.Max(0f, _attackCooldownTimer), _playerStat.TotalStat[EStatType.AttackSpeed]);
-        }
 
+        var stateInfo = _playerAnimator.GetCurrentAnimatorStateInfo(0);
+        _hpController.SetAttackSpeed(stateInfo.normalizedTime % 1.0f, 1f);
+        
         _healthRegenCooldownTimer -= Time.deltaTime;
         if (_healthRegenCooldownTimer <= 0.0f)
         {

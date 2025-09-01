@@ -8,11 +8,6 @@ public class AnimationEventHandler : MonoBehaviour
     {
         _combatant.OnAttackHit();
     }
-
-    public void OnAttackComplete()
-    {
-        _combatant.OnAttackComplete();
-    }
     
     private void Awake()
     {

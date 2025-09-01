@@ -71,28 +71,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
             GameManager.Instance.OnBattleEnd(false);
         }
     }
-    
-    private void Update()
-    {
-        if (GameManager.Instance.GameState != GameManager.EGameState.Event)
-            return;
-
-        if (_progressCombat == false)
-            return;
-        
-        // Player 공격 턴
-        TryPlayerAttack();
-        
-        if (GameManager.Instance.GameState != GameManager.EGameState.Event)
-            return;
-
-        if (_progressCombat == false)
-            return;
-        
-        // Monster 공격 턴
-        TryMonstersAttack();
-
-    }
 
     private void RegisterPlayer()
     {
@@ -101,7 +79,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         _player.transform.position = new Vector3(-1f, 0f, 0f);
         _player.transform.localScale = Vector3.one;
         _player.transform.GetChild(0).transform.localScale = new Vector3(-1f, 1f, 1f);
-        _player.Init();
+        _player.StartAttack();
     }
     
     private void RegisterMonster(List<GameObject> monsters)
@@ -112,29 +90,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
             var monster = Instantiate(monsters[i], _battleGround.transform, false).GetComponent<Monster>();
             monster.transform.localPosition = new Vector3(0.5f * (i + 1), 0.5f * (i % 2 - 1), -1f);
             _monsters.Add(monster);
-            monster.Init();
-        }
-    }
-
-    private void TryPlayerAttack()
-    {
-        if (_player.TryStartAttack())
-        {
-            print($"Player 공격 시작");
+            monster.StartAttack();
         }
     }
     
-    private void TryMonstersAttack()
-    {
-        foreach (var monster in _monsters)
-        {
-            if (monster.TryStartAttack())
-            {
-                print($"{monster.name} 공격 시작");
-            }
-        }
-    }
-
     private void ProcessDeadMonsters()
     {
         List<Monster> monstersToRemove = new List<Monster>();

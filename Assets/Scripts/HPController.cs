@@ -14,7 +14,7 @@ public class HPController : MonoBehaviour
 
     public void SetAttackSpeed(float currentSpeed, float totalSpeed)
     {
-        _hpDown.DOScaleX(Mathf.Clamp01(currentSpeed / totalSpeed), 0f);
+        _hpDown.DOScaleX(1f - Mathf.Clamp01(currentSpeed / totalSpeed), 0f);
     }
 
 }
