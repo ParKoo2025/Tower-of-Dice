@@ -84,6 +84,10 @@ public class GameManager : SingletonBehavior<GameManager>
             print($"{_leftDice} -> {left} {_rightDice} -> {right}\n 이동 거리 : {left + right}");
             moveCount = left + right;
         }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            moveCount = 39;
+        }
 
         if (moveCount > 0)
         {

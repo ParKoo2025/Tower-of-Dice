@@ -525,8 +525,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3582382452053060179}
   - component: {fileID: 2769342450205788506}
-  - component: {fileID: 6978735778663691506}
-  - component: {fileID: 525341351083194930}
+  - component: {fileID: 6025041287646392835}
+  - component: {fileID: 5786360312314475962}
   m_Layer: 5
   m_Name: Monster
   m_TagString: Untagged
@@ -3652,7 +3652,7 @@ MonoBehaviour:
   DEBUFF_List: []
   DEATH_List: []
   OTHER_List: []
---- !u!114 &6978735778663691506
+--- !u!114 &6025041287646392835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3664,9 +3664,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb51d979b7c9ad7489d6c102301f7300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monsterAnimator: {fileID: 2262796793099195375}
+  _animator: {fileID: 2262796793099195375}
   _hpController: {fileID: 2692775341695191907}
---- !u!114 &525341351083194930
+--- !u!114 &5786360312314475962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3675,10 +3675,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 603983468457067509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d859bdf4ee2167478ea9f1d6696a29c, type: 3}
+  m_Script: {fileID: 11500000, guid: 651bbb0447044ce584d8e079bfaef784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _basicStat: {fileID: 11400000, guid: 935bc401e59869b4f99e27e6802f5afb, type: 2}
+  _equipment: []
 --- !u!1 &623577105251579577
 GameObject:
   m_ObjectHideFlags: 0
@@ -15030,6 +15031,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HP
+      objectReference: {fileID: 0}
+    - target: {fileID: 3569373599913009128, guid: 6ed585e9db752ea498fa9676a32e1675,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4834803217258548104, guid: 6ed585e9db752ea498fa9676a32e1675,
         type: 3}

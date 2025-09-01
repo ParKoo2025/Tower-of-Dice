@@ -12,8 +12,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
     
     private bool _progressCombat = false;
 
-    public event Action<Transform, float> OnDamaged;
-
+    public Action<Transform, EDamageType, float> OnChangeHealth;
+    
+    public int MonsterCount => _monsters.Count;
+    
     public void StartBattle(List<GameObject> monsters)
     {
         _battleGround.SetActive(true);
@@ -28,7 +30,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
     public void EndBattle()
     {
         _progressCombat = false;
-        _battleGround.SetActive(false);
         
         _player.StopAttack();
         foreach (var monster in _monsters)
@@ -36,35 +37,31 @@ public class CombatManager : SingletonBehavior<CombatManager>
             monster.StopAttack();
             Destroy(monster.gameObject);
         }
+        _battleGround.SetActive(false);
     }
 
-    public int ProcessPlayerAttack(float damage, float aocDamage)
+    public void ProcessPlayerAttack(EDamageType damageType, float damage, float aocDamage)
     {
-        int aocCount = 0;
         if (_monsters.Count > 0)
         {
-            OnDamaged?.Invoke(_monsters.First().transform, damage);
-            _monsters.First().TakeDamage(damage);
+            _monsters.First().TakeDamage(damageType, damage);
         }
 
         if (aocDamage > 0)
         {
             foreach (var monster in _monsters)
             {
-                OnDamaged?.Invoke(monster.transform, damage);
-                monster.TakeDamage(aocDamage);
-                aocCount++;
+                monster.TakeDamage(EDamageType.Attack, aocDamage);
             }
         }
 
         ProcessDeadMonsters();
-        return aocCount;
     }
 
-    public void ProcessMonsterAttack(Monster attacker, float damage)
+    public void ProcessMonsterAttack(EDamageType damageType, float damage, float aocDamage)
     {
-        OnDamaged?.Invoke(_player.transform, damage);
-        _player.TakeDamage(damage);
+        OnChangeHealth?.Invoke(_player.transform, EDamageType.Attack, damage);
+        _player.TakeDamage(damageType, damage);
 
         if (_player.IsDead)
         {
@@ -79,6 +76,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         _player.transform.position = new Vector3(-1f, 0f, 0f);
         _player.transform.localScale = Vector3.one;
         _player.transform.GetChild(0).transform.localScale = new Vector3(-1f, 1f, 1f);
+        _player.ProcessAttack += ProcessPlayerAttack;
         _player.StartAttack();
     }
     
@@ -90,6 +88,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
             var monster = Instantiate(monsters[i], _battleGround.transform, false).GetComponent<Monster>();
             monster.transform.localPosition = new Vector3(0.5f * (i + 1), 0.5f * (i % 2 - 1), -1f);
             _monsters.Add(monster);
+            monster.ProcessAttack += ProcessMonsterAttack;
             monster.StartAttack();
         }
     }
@@ -110,7 +109,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             _monsters.Remove(monster);
             print($"{monster.name} 사망");
-           Destroy(monster.gameObject, 2f);
+            Destroy(monster.gameObject, 2f);
         }
 
         if (_monsters.Count == 0)

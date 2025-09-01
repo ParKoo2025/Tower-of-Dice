@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
+
+public enum EDamageType
+{
+    Attack, CriticalAttack, Heal, Size
+}
 
 public class DamageManager : MonoBehaviour
 {
@@ -18,7 +24,7 @@ public class DamageManager : MonoBehaviour
             _textPool.Enqueue(InstantiateText());
         }
 
-        CombatManager.Instance.OnDamaged += OnDamaged;
+        CombatManager.Instance.OnChangeHealth += OnChangeHealth;
     }
 
     private TMP_Text InstantiateText()
@@ -28,7 +34,7 @@ public class DamageManager : MonoBehaviour
         return text;
     }
 
-    private void OnDamaged(Transform damagedTransform, float value)
+    private void OnChangeHealth(Transform damagedTransform, EDamageType damageType, float value)
     {
         TMP_Text text;
         if (_textPool.Count == 0)
@@ -41,7 +47,22 @@ public class DamageManager : MonoBehaviour
         }
 
         text.text = $"{value}";
-        
+
+        switch (damageType)
+        {
+            case EDamageType.Attack:
+                text.color = Color.red;
+                break;
+            case EDamageType.CriticalAttack:
+                text.color = Color.yellow;
+                break;
+            case EDamageType.Heal:
+                text.color = Color.green;
+                break;
+            default:
+                Debug.LogError($"Unknown damage type {damageType}");
+                break;
+        }
         
         Vector3 randomOffset = Random.insideUnitCircle * new Vector2(1f, 5f) + new Vector2(0f, 5f); 
         text.transform.position = damagedTransform.position + randomOffset;

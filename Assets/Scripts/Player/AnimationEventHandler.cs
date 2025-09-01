@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AnimationEventHandler : MonoBehaviour
 {
-    private ICombatant _combatant;
+    private Combatant _combatant;
 
     public void OnAttackHit()
     {
@@ -11,6 +11,6 @@ public class AnimationEventHandler : MonoBehaviour
     
     private void Awake()
     {
-        _combatant = GetComponentInParent<ICombatant>();
+        _combatant = GetComponentInParent<Combatant>();
     }
 }

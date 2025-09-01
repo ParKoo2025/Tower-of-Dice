@@ -23,6 +23,7 @@ public class TileManager : SingletonBehavior<TileManager>
 
     public void MovePlayer(int moveCount)
     {
+        print(_tiles.Count);
         int nxt = (_playerPosition + moveCount) % _tiles.Count;
         StartCoroutine(MovePlayer(_playerPosition, nxt));
     }
