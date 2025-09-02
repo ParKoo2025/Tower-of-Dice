@@ -17,15 +17,15 @@ MonoBehaviour:
     - Name: Health
       Value: 100
     - Name: HealthRegen
-      Value: 0
+      Value: 1
     - Name: HealthStealRate
       Value: 0
     - Name: AttackDamage
-      Value: 10
+      Value: 1
     - Name: AttackSpeed
       Value: 1
     - Name: AocDamage
-      Value: 10
+      Value: 1
     - Name: CriticalRate
       Value: 10
     - Name: CriticalMultiplier

@@ -25,9 +25,10 @@ public class Combatant : MonoBehaviour
         _hpController.gameObject.SetActive(true);
         _isAttacking = true;
 
-        _animator.speed = 1f / _stat.Stat[EStatType.AttackSpeed];
-        _animator.Play("ATTACK");
+        _animator.speed = 1f / _stat.Stat[EStatType.AttackSpeed] / 2f;
         _hpController.SetAttackSpeed(0f, 1f);
+
+        _animator.Play("WAIT");
     }
 
     public void OnAttackHit()
@@ -104,10 +105,6 @@ public class Combatant : MonoBehaviour
     private void Update()
     {
         if (!_isAttacking) return;
-        
-        var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        _hpController.SetAttackSpeed(stateInfo.normalizedTime % 1.0f, 1f);
-
         if (_stat.Stat[EStatType.HealthRegen] == 0f) return;
         
         _healthRegenCooldownTimer -= Time.deltaTime;
@@ -119,7 +116,14 @@ public class Combatant : MonoBehaviour
             ChangeHealth(_stat.Stat[EStatType.HealthRegen]);
             CombatManager.Instance.OnChangeHealth?.Invoke(transform, EDamageType.Heal, _stat.Stat[EStatType.HealthRegen]);
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (!_isAttacking) return;
         
+        var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        _hpController.SetAttackSpeed(stateInfo.normalizedTime % 1.0f, 1f);
     }
 
     private void ChangeHealth(float delta)

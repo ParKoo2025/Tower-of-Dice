@@ -60,7 +60,6 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void ProcessMonsterAttack(EDamageType damageType, float damage, float aocDamage)
     {
-        OnChangeHealth?.Invoke(_player.transform, EDamageType.Attack, damage);
         _player.TakeDamage(damageType, damage);
 
         if (_player.IsDead)
