@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 42457248f5d94ee4f9e4bf4a6cb95555
+guid: a911935454708444fa6e89c420141cdf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2316525067674648658
-    second: Flag_LT_0
+      213: 8423264888999798364
+    second: Ladder_Basic_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Flag_LT_0
+      name: Ladder_Basic_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 170
-        height: 350
+        width: 50
+        height: 480
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 250090c8643f52020800000000000000
-      internalID: 2316525067674648658
+      spriteID: c566ad5c9c275e470800000000000000
+      internalID: 8423264888999798364
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Flag_LT_0: 2316525067674648658
+      Ladder_Basic_0: 8423264888999798364
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
