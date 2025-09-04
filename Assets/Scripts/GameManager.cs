@@ -106,7 +106,7 @@ public class GameManager : SingletonBehavior<GameManager>
     {
         Vector3 spawnPos;
         
-        var screenCenter = new Vector3(0f, 0f, 0f);
+        var screenCenter = TileManager.Instance.Player.transform.position;
 
 
         var eq = EquipmentManager.Instance.SpawnRandom();

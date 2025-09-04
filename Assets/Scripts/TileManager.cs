@@ -143,8 +143,8 @@ public class TileManager : SingletonBehavior<TileManager>
                 GameManager.Instance.CurFloor++;
                 
                 // 장비 다시 계산
-                var playerStat = _player.GetComponent<PlayerStat>();
-                playerStat.ReCalculateEquipmentStats();
+                var player = _player.GetComponent<Player>();
+                player.ReCalculateEquipmentStats();
                 
                 foreach (var tile in _tiles)
                 {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3402683472933176605}
   - component: {fileID: 5788721296078943592}
   - component: {fileID: 3924790019813882486}
+  - component: {fileID: 5361249743200928409}
   m_Layer: 5
   m_Name: equipment
   m_TagString: Untagged
@@ -144,6 +145,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!225 &5361249743200928409
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909230777290664398}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6158946344113964345
 GameObject:
   m_ObjectHideFlags: 0

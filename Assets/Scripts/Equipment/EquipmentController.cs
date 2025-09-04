@@ -18,8 +18,8 @@ public class EquipmentController : MonoBehaviour, IDropHandler
             equipment.transform.SetParent(transform, false);
             equipment.transform.localPosition = Vector3.zero;
             equipment.transform.localScale = Vector3.one;
-            
-            var player = FindObjectOfType<PlayerStat>();
+
+            var player = TileManager.Instance.Player.GetComponent<Player>();
             player.SetEquipment(equipment);
         }
         else

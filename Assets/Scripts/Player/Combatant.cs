@@ -5,14 +5,14 @@ using Random = UnityEngine.Random;
 
 public class Combatant : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
-    [SerializeField] private HPController _hpController;
-    private CombatantStat _stat;
+    [SerializeField] protected Animator _animator;
+    [SerializeField] protected HPController _hpController;
+    protected CombatantStat _stat;
     
     private float _healthRegenCooldownTimer = 0.0f;
     private bool _isAttacking;
     
-    public bool IsDead { get; private set; }
+    public bool IsDead { get; protected set; }
 
     public event Action<EDamageType, float, float> ProcessAttack;
     
@@ -124,6 +124,8 @@ public class Combatant : MonoBehaviour
         
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         _hpController.SetAttackSpeed(stateInfo.normalizedTime % 1.0f, 1f);
+
+        _animator.speed = 1f / _stat.Stat[EStatType.AttackSpeed] / 2f;
     }
 
     private void ChangeHealth(float delta)

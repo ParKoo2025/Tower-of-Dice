@@ -143,7 +143,7 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (!isEquipped)
         {
             DefaultPos = transform.position;
-            GetComponent<Image>().raycastTarget = false;
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
     }
 
@@ -151,8 +151,15 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (!isEquipped)
         {
-            Vector3 curPos = Camera.main.ScreenToWorldPoint(eventData.position);
+            Vector3 curPos;
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                transform.parent as RectTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out curPos
+            );
             transform.position = curPos;
+
         }
     }
 
@@ -161,7 +168,8 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (!isEquipped)
         {
             transform.position = DefaultPos;
-            GetComponent<Image>().raycastTarget = true;
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
+
         }
     }
 }
