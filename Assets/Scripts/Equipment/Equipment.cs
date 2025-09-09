@@ -18,6 +18,8 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [Header("UI")]
     [SerializeField]
     private TextMeshProUGUI _equipmentLevelTMP;
+    [SerializeField]
+    private Image _rarityBackground;
     
     [Header("Data")]
     [SerializeField]
@@ -80,6 +82,7 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private void Start()
     {
         int curFloor = GameManager.Instance.CurFloor;
+        SetRarityColor();
         SetLevel(curFloor);
         ApplyFloorPenalty();
     }
@@ -132,6 +135,17 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         Destroy(gameObject);
+    }
+
+    private void SetRarityColor()
+    {
+        Debug.Log("SetRarityColor 실행");
+        if (_rarity == ERarity.Common) _rarityBackground.color = new Color(242/255f, 242/255f, 218/255f, 1f);
+        else if (_rarity == ERarity.Uncommon) _rarityBackground.color = new Color(124/255f, 207/255f, 154/255f, 1f);
+        else if (_rarity == ERarity.Rare) _rarityBackground.color = new Color(73/255f, 194/255f, 242/255f, 1f);
+        else if (_rarity == ERarity.Epic) _rarityBackground.color = new Color(226/255f, 155/255f, 250/255f, 1f);
+        else if (_rarity == ERarity.Legendary) _rarityBackground.color = new Color(250/255f, 217/255f, 55/255f, 1f);
+        else if (_rarity == ERarity.Mythic) _rarityBackground.color = new Color(255/255f, 112/255f, 112/255f, 1f);
     }
     
     //장비 드래그 & 드롭

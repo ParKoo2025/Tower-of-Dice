@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equipmentLevelTMP: {fileID: 5167093598276735387}
+  _rarityBackground: {fileID: 2211871295235489937}
   _stat: {fileID: 0}
   _equipmentLevel: 0
   _equipmentType: 0
@@ -224,8 +225,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 90
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bfcd7444f51cca940b36c22a003019ee, type: 2}
+  m_sharedMaterial: {fileID: -8810783092017362218, guid: bfcd7444f51cca940b36c22a003019ee,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -249,15 +251,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.55
-  m_fontSizeBase: 41.55
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 32
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -305,7 +307,7 @@ GameObject:
   - component: {fileID: 8380948008510053969}
   - component: {fileID: 2211871295235489937}
   m_Layer: 5
-  m_Name: levelBackground
+  m_Name: rarityBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

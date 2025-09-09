@@ -15,8 +15,8 @@ public enum ERarity
 
 public enum EEquipments
 {
-    ATK_Damage_Weapon,
-    CRT_Damage_Weapon,
+    ATK_DMG_Weapon,
+    CRT_DMG_Weapon,
     Size
 }
 
