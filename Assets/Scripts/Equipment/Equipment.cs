@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,9 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Stat _finalStat = new Stat();
     
     private bool isEquipped = false;
+    
+    private EStatType _mainStatType;
+    private List<(EStatType, float)> _subStatList = new List<(EStatType, float)>();
 
     public bool IsEquipped
     {
