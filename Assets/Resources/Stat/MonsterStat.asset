@@ -21,7 +21,7 @@ MonoBehaviour:
     - Name: HealthStealRate
       Value: 0
     - Name: AttackDamage
-      Value: 5
+      Value: 20
     - Name: AttackSpeed
       Value: 1.5
     - Name: AocDamage

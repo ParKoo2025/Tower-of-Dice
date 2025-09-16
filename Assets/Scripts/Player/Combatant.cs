@@ -21,11 +21,11 @@ public class Combatant : MonoBehaviour
         _healthRegenCooldownTimer = 1.0f;
         IsDead = false;
 
-        _hpController.SetHealth(_stat.CurrentHealth, _stat.Stat[EStatType.Health]);
+        _hpController.SetHealth(_stat.CurrentHealth, _stat.Stat[EStatType.HP]);
         _hpController.gameObject.SetActive(true);
         _isAttacking = true;
 
-        _animator.speed = 1f / _stat.Stat[EStatType.AttackSpeed] / 2f;
+        _animator.speed = 1f / _stat.Stat[EStatType.ATK_SPD] / 2f;
         _hpController.SetAttackSpeed(0f, 1f);
 
         _animator.Play("WAIT");
@@ -37,7 +37,7 @@ public class Combatant : MonoBehaviour
 
         bool isCritical;
         float damage = CalculateAttackDamage(out isCritical);
-        float aocDamage = _stat.Stat[EStatType.AocDamage];
+        float aocDamage = _stat.Stat[EStatType.AOE];
 
         EDamageType damageType = EDamageType.Attack;
         if (isCritical)
@@ -47,7 +47,7 @@ public class Combatant : MonoBehaviour
         
         int aocCount = CombatManager.Instance.MonsterCount;
         
-        float healthSteal = (damage + aocDamage * aocCount) * (_stat.Stat[EStatType.HealthStealRate] / 100f);
+        float healthSteal = (damage + aocDamage * aocCount) * (_stat.Stat[EStatType.Lifesteal_Rate] / 100f);
         ChangeHealth(healthSteal);
     }
 
@@ -105,7 +105,7 @@ public class Combatant : MonoBehaviour
     private void Update()
     {
         if (!_isAttacking) return;
-        if (_stat.Stat[EStatType.HealthRegen] == 0f) return;
+        if (_stat.Stat[EStatType.HP_Regen] == 0f) return;
         
         _healthRegenCooldownTimer -= Time.deltaTime;
         if (_healthRegenCooldownTimer <= 0.0f)
@@ -113,8 +113,8 @@ public class Combatant : MonoBehaviour
             _healthRegenCooldownTimer = 1.0f;
             
             
-            ChangeHealth(_stat.Stat[EStatType.HealthRegen]);
-            CombatManager.Instance.OnChangeHealth?.Invoke(transform, EDamageType.Heal, _stat.Stat[EStatType.HealthRegen]);
+            ChangeHealth(_stat.Stat[EStatType.HP_Regen]);
+            CombatManager.Instance.OnChangeHealth?.Invoke(transform, EDamageType.Heal, _stat.Stat[EStatType.HP_Regen]);
         }
     }
 
@@ -125,26 +125,26 @@ public class Combatant : MonoBehaviour
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         _hpController.SetAttackSpeed(stateInfo.normalizedTime % 1.0f, 1f);
 
-        _animator.speed = 1f / _stat.Stat[EStatType.AttackSpeed] / 2f;
+        _animator.speed = 1f / _stat.Stat[EStatType.ATK_SPD] / 2f;
     }
 
     private void ChangeHealth(float delta)
     {
         _stat.CurrentHealth =
-            Mathf.Clamp(_stat.CurrentHealth + delta, 0f, _stat.Stat[EStatType.Health]);
-        _hpController.SetHealth(_stat.CurrentHealth, _stat.Stat[EStatType.Health]);
+            Mathf.Clamp(_stat.CurrentHealth + delta, 0f, _stat.Stat[EStatType.HP]);
+        _hpController.SetHealth(_stat.CurrentHealth, _stat.Stat[EStatType.HP]);
     }
 
     
     private float CalculateAttackDamage(out bool isCritical)
     {
         isCritical = false; 
-        float damage = _stat.Stat[EStatType.AttackDamage];
+        float damage = _stat.Stat[EStatType.ATK];
         float rand = Random.Range(0, 99);
-        if (_stat.Stat[EStatType.CriticalRate] > rand)
+        if (_stat.Stat[EStatType.CRT_Rate] > rand)
         {
             isCritical = true;
-            damage = damage * (1.5f + _stat.Stat[EStatType.CriticalMultiplier] / 100f);
+            damage = damage * (1.5f + _stat.Stat[EStatType.CRT_DMG] / 100f);
         }
 
         return damage;
@@ -154,13 +154,13 @@ public class Combatant : MonoBehaviour
     {
         canCounterAttack = false;
         float rand = Random.Range(0, 99);
-        if (_stat.Stat[EStatType.EvasionRate] > rand)
+        if (_stat.Stat[EStatType.EVA] > rand)
         {
             print("회피");
             return 0f;
         }
 
-        damage = MathF.Max(0f, damage - _stat.Stat[EStatType.Defence]);
+        damage = MathF.Max(0f, damage - _stat.Stat[EStatType.DEF]);
         rand = Random.Range(0, 99);
         if (_stat.Stat[EStatType.CounterAttackRate] > rand)
         {

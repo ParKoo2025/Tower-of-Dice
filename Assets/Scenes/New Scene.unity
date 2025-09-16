@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 234712071}
   - component: {fileID: 234712070}
   - component: {fileID: 234712072}
+  - component: {fileID: 234712073}
   m_Layer: 0
   m_Name: EquipmentManager
   m_TagString: Untagged
@@ -493,6 +494,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseEquipment: {fileID: 5788721296078943592, guid: 0a5088d7e22a6414093ea79d448aecf9,
     type: 3}
+--- !u!114 &234712073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234712069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167afea39f576c34da0ba84337bfa153, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rarityStats:
+  - _rarity: 1
+    _subStats:
+    - _statType: 0
+      _min: 10
+      _max: 50
+  - _rarity: 2
+    _subStats:
+    - _statType: 0
+      _min: 40
+      _max: 80
+  - _rarity: 3
+    _subStats:
+    - _statType: 0
+      _min: 70
+      _max: 110
+  - _rarity: 4
+    _subStats:
+    - _statType: 0
+      _min: 100
+      _max: 140
+  - _rarity: 5
+    _subStats:
+    - _statType: 0
+      _min: 999
+      _max: 999
+  _mainStats:
+  - _equipmentName: 0
+    _statType: 3
+    _value: 100
+  - _equipmentName: 1
+    _statType: 7
+    _value: 100
 --- !u!1 &293263572
 GameObject:
   m_ObjectHideFlags: 0

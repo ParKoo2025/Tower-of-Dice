@@ -24,7 +24,7 @@ public class CombatantStat : MonoBehaviour
         {
             Stat[(EStatType)i] = _basicStat[(EStatType)i];
         }
-        CurrentHealth = Stat[EStatType.Health];
+        CurrentHealth = Stat[EStatType.HP];
     }
     
     private void UnEquip(int idx)
@@ -41,7 +41,6 @@ public class CombatantStat : MonoBehaviour
             if (_equipped[j] != null)
             {
                 SubtractEquipmentStat(j);
-                _equipped[j].ApplyFloorPenalty();
                 AddEquipmentStat(j);
             }
         }
@@ -56,7 +55,7 @@ public class CombatantStat : MonoBehaviour
         {
             Stat[(EStatType)i] += _equipped[idx].FinalStat[(EStatType)i];
         }
-        CurrentHealth += _equipped[idx].FinalStat[EStatType.Health];
+        CurrentHealth += _equipped[idx].FinalStat[EStatType.HP];
     }
     
     private void SubtractEquipmentStat(int idx)
@@ -65,6 +64,6 @@ public class CombatantStat : MonoBehaviour
         {
             Stat[(EStatType)i] -= _equipped[idx].FinalStat[(EStatType)i];
         }
-        CurrentHealth -= _equipped[idx].FinalStat[EStatType.Health];
+        CurrentHealth -= _equipped[idx].FinalStat[EStatType.HP];
     }
 }

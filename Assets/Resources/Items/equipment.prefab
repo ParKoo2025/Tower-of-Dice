@@ -96,10 +96,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _equipmentLevelTMP: {fileID: 5167093598276735387}
   _rarityBackground: {fileID: 2211871295235489937}
-  _stat: {fileID: 0}
   _equipmentLevel: 0
   _equipmentType: 0
   _equipmentSprite: {fileID: 3427621667140581836}
+  equipmentDescription: {fileID: 2039406697932961177, guid: 01ee9cc004f507e4681f607503b6f7da,
+    type: 3}
 --- !u!61 &3924790019813882486
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -225,8 +226,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 90
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bfcd7444f51cca940b36c22a003019ee, type: 2}
-  m_sharedMaterial: {fileID: -8810783092017362218, guid: bfcd7444f51cca940b36c22a003019ee,
+  m_fontAsset: {fileID: 11400000, guid: eac44931f324a47f0a3ea04792bf3002, type: 2}
+  m_sharedMaterial: {fileID: 8274496476722931491, guid: eac44931f324a47f0a3ea04792bf3002,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

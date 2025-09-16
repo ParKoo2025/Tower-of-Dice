@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,7 @@ public enum EEquipmentType
     Size
 }
 
-public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler,IPointerExitHandler
 {
     [Header("UI")]
     [SerializeField]
@@ -24,11 +25,11 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     
     [Header("Data")]
     [SerializeField]
-    private StatScriptable _stat;
-    [SerializeField]
     private int _equipmentLevel;
     [SerializeField]
     private EEquipmentType _equipmentType;
+    
+    private EEquipments _equipmentName;
 
     private ERarity _rarity;
     
@@ -36,12 +37,20 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     private Image _equipmentSprite;
     
+    [SerializeField]
+    private EquipmentDescription equipmentDescription;
+    private static EquipmentDescription _shared;
+
     private Stat _finalStat = new Stat();
     
     private bool isEquipped = false;
     
-    private EStatType _mainStatType;
-    private List<(EStatType, float)> _subStatList = new List<(EStatType, float)>();
+    private List<(EStatType, float)> _statList = new List<(EStatType, float)>();
+
+    public List<(EStatType, float)> GetStatList()
+    {
+        return _statList;
+    }
 
     public bool IsEquipped
     {
@@ -70,11 +79,12 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         set { _equipmentType = value; }
     }
 
-    public StatScriptable Stat
+    public EEquipments EquipmentName
     {
-        get { return _stat; }
-        set { _stat = value; }
+        get { return _equipmentName; }
+        set { _equipmentName = value; }
     }
+    
     public int EquipmentLevel => _equipmentLevel;
     public Stat FinalStat => _finalStat;
 
@@ -86,23 +96,17 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private void Start()
     {
         int curFloor = GameManager.Instance.CurFloor;
+
         SetRarityColor();
         SetLevel(curFloor);
-        ApplyFloorPenalty();
-    }
-    
-    public void ApplyFloorPenalty()
-    {
-        int curFloor = GameManager.Instance.CurFloor;
-        
-        float penaltyRate = 1f - ((curFloor - _equipmentLevel) * 0.1f);
 
-        if (penaltyRate < 0f) penaltyRate = 0f; // 최소 0
-
-        for (int i = 0; i < (int)EStatType.Size; i++)
+        _statList = SubStatGenerator.Instance.StatGenerator(_rarity, _equipmentName);
+        for (int i = 0; i < _statList.Count; i++)
         {
-            _finalStat[(EStatType)i] = _stat[(EStatType)i] * penaltyRate;
+            var (stat, value) = _statList[i];
+            _finalStat[stat] += value;
         }
+        
     }
 
     public void SetLevel(int level)
@@ -186,9 +190,28 @@ public class Equipment : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (!isEquipped)
         {
             transform.position = DefaultPos;
-            GetComponent<CanvasGroup>().blocksRaycasts = true;
-
         }
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("포인터 들어옴");
+        if (_shared == null)
+        {
+            var canvas = FindObjectOfType<Canvas>();
+            _shared = Instantiate(equipmentDescription, canvas.transform);
+            _shared.transform.localScale = new Vector3(0.5f, 0.5f, 1f); 
+            _shared.gameObject.SetActive(false);
+        }
+        
+        _shared.ShowEquipmentDescription(this, eventData.position);
+        _shared.gameObject.SetActive(true);
+    }
+    
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+    {
+        _shared.gameObject.SetActive(false);
     }
 }
 

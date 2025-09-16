@@ -82,14 +82,8 @@ public class EquipmentManager : SingletonBehavior<EquipmentManager>
         EEquipments subKind = RollSubKind(typeCfg);
 
         var eq = _factory.GetEquipment(rarity, subKind);
-        if (eq == null)
-        {
-            Debug.LogError($"[EquipmentManager] Factory가 장비 생성에 실패: rarity={rarity}, subKind={subKind}. " +
-                           $"프리팹 매핑과 Equipment 컴포넌트 부착 여부를 확인하세요.");
-            return null;
-        }
         eq.EquipmentType = type;
-        eq.Stat = _equipmentStats[subKind];
+        eq.EquipmentName = subKind;
         eq.Rarity = rarity;
         
         eq.transform.SetParent(_canvas.transform, false);

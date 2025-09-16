@@ -4,10 +4,10 @@ using UnityEngine.Serialization;
 
 public enum EStatType
 {
-    Health, HealthRegen, HealthStealRate,
-    AttackDamage, AttackSpeed, AocDamage,
-    CriticalRate, CriticalMultiplier,
-    Defence, EvasionRate, CounterAttackRate,
+    HP, HP_Regen, Lifesteal_Rate,
+    ATK, ATK_SPD, AOE,
+    CRT_Rate, CRT_DMG,
+    DEF, EVA, CounterAttackRate,
     Size
 }
 
