@@ -1,10 +1,21 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Player : Combatant
 {
+    private List<IPassive> _passives;
+
+    private void Start()
+    {
+        _passives = new List<IPassive>();
+        var p = new OnMonsterDeathMaxHpIncreasePassive();
+        _passives.Add(p);
+        p.Activate(this);
+    }
+    
     public void SetEquipment(Equipment equipment)
     {
         _stat.SetEquipment(equipment);

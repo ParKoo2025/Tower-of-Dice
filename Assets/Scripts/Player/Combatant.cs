@@ -97,6 +97,11 @@ public class Combatant : MonoBehaviour
         _animator.Play("IDLE");
     }
 
+    public void AddStat(EStatType type, float value)
+    {
+        _stat.Stat[type] += value;
+    }
+
     private void Awake()
     {
         _stat = GetComponent<CombatantStat>();

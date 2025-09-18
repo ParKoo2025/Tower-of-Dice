@@ -110,6 +110,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
             _monsters.Remove(monster);
             print($"{monster.name} 사망");
             Destroy(monster.gameObject, 2f);
+            
+            // 몬스터 죽었을 때 패시브 트리거 발동
+            PassiveBus.Publish(EPassiveTriggerType.OnMonsterDeath);
         }
 
         if (_monsters.Count == 0)
