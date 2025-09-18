@@ -10,6 +10,8 @@ public class CombatManager : SingletonBehavior<CombatManager>
     
     private Player _player;
     private List<Monster> _monsters;
+
+    private float _combatTime;
     
     private bool _progressCombat = false;
 
@@ -26,6 +28,9 @@ public class CombatManager : SingletonBehavior<CombatManager>
         RegisterMonster(monsters); 
         
         _progressCombat = true;
+        _combatTime = 0.0f;
+        
+        PassiveBus.Publish(EPassiveTriggerType.OnBattleStart);
     }
 
     public void EndBattle()
@@ -43,7 +48,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void ProcessPlayerAttack(EDamageType damageType, float damage, float aocDamage)
     {
-        if (_monsters.Count > 0)
+        if (_monsters.Count > 0 && damage > 0)
         {
             _monsters.First().TakeDamage(damageType, damage);
         }
@@ -67,6 +72,16 @@ public class CombatManager : SingletonBehavior<CombatManager>
         {
             GameManager.Instance.OnBattleEnd(false);
         }
+    }
+
+    public bool IsPastTime(float time)
+    {
+        return _combatTime < time;
+    }
+
+    private void Update()
+    {
+        _combatTime += Time.deltaTime;
     }
 
     private void RegisterPlayer()
@@ -121,6 +136,5 @@ public class CombatManager : SingletonBehavior<CombatManager>
             _player.StopAttack();
         }
     }
-
 
 }

@@ -43,6 +43,19 @@ public class GameManager : SingletonBehavior<GameManager>
         StartCoroutine(WaitForCombatEnding());
     }
     
+    // 장비 테스트
+    public void SpawnEquipment()
+    {
+        Vector3 spawnPos;
+        
+        var screenCenter = TileManager.Instance.Player.transform.position;
+
+
+        var eq = EquipmentManager.Instance.SpawnRandom();
+        eq.transform.position = screenCenter;
+        eq.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+    }
+    
     private void Update()
     {
         if (GameState == EGameState.Idle)
@@ -101,18 +114,7 @@ public class GameManager : SingletonBehavior<GameManager>
         }
     }
     
-    // 장비 테스트
-    private void SpawnEquipment()
-    {
-        Vector3 spawnPos;
-        
-        var screenCenter = TileManager.Instance.Player.transform.position;
-
-
-        var eq = EquipmentManager.Instance.SpawnRandom();
-        eq.transform.position = screenCenter;
-        eq.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-    }
+   
     
     private void OnPlayerBattleWin()
     {
