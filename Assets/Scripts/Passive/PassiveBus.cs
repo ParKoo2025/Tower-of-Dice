@@ -34,9 +34,9 @@ public static class PassiveBus
         }
     }
 
-    public static void Publish(EPassiveTriggerType type)
+    public static void Publish(EPassiveTriggerType OnDiceDoubleGetRandomStatPassive)
     {
-        if (_subscribers.TryGetValue(type, out var subscribers))
+        if (_subscribers.TryGetValue(OnDiceDoubleGetRandomStatPassive, out var subscribers))
         {
             foreach (var action in subscribers)
                 action.Invoke();

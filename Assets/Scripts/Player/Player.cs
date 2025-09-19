@@ -11,7 +11,7 @@ public class Player : Combatant
     private void Start()
     {
         _passives = new List<IPassive>();
-        var hpIncrease = new OnMonsterDeathMaxHpIncreasePassive();
+        var hpIncrease = new OnMonsterDeathGetMaxHpPassive();
         _passives.Add(hpIncrease);
         hpIncrease.Activate(this);
 
@@ -22,6 +22,10 @@ public class Player : Combatant
         var cDropEquipment = new OnMonsterDeathCountDropEquipmentPassive();
         _passives.Add(cDropEquipment);
         cDropEquipment.Activate(this);
+
+        var doubledice = new OnDiceDoubleGetRandomStatPassive();
+        _passives.Add(doubledice);
+        doubledice.Activate(this);
     }
     
     public void SetEquipment(Equipment equipment)

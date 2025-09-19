@@ -95,6 +95,11 @@ public class GameManager : SingletonBehavior<GameManager>
             int left = Dice.RollTheDice(_leftDice, out leftDiceSprite);
             int right = Dice.RollTheDice(_rightDice, out rightDiceSprite);
 
+            if (left == right)
+            {
+                PassiveBus.Publish(EPassiveTriggerType.OnDiceDouble);
+            }
+
             // main UI에 sprite 전달해주기로 변경하기!
             //_leftDiceImage.sprite = leftDiceSprite;
             //_rightDiceImage.sprite = rightDiceSprite;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OnMonsterDeathMaxHpIncreasePassive : IPassive
+public class OnMonsterDeathGetMaxHpPassive : IPassive
 {
     private float _amount = 10;
     private Combatant _owner;
