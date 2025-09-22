@@ -98,7 +98,7 @@ public class Combatant : MonoBehaviour
     public void AddStat(EStatType type, float value)
     {
         _stat.Stat[type] += value;
-        print(1 / _stat.Stat[EStatType.ATK_SPD] / 2f);
+        print(_stat.Stat[EStatType.ATK_SPD] / 2f);
     }
 
     public void RegenHP(float value)

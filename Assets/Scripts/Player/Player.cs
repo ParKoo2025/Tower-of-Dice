@@ -62,6 +62,10 @@ public class Player : Combatant
         _passives.Add(getAtkSpd);
         getAtkSpd.Activate(this);
 
+        var tGetAtkSpd = new OnBattleStartTimeGetAttackSPDPassive();
+        _passives.Add(tGetAtkSpd);
+        tGetAtkSpd.Activate(this);
+
         // var cDropEquipment = new OnMonsterDeathCountDropEquipmentPassive();
         // _passives.Add(cDropEquipment);
         // cDropEquipment.Activate(this);

@@ -23,7 +23,7 @@ MonoBehaviour:
     - Name: AttackDamage
       Value: 20
     - Name: AttackSpeed
-      Value: 1.5
+      Value: 0.66666
     - Name: AocDamage
       Value: 0
     - Name: CriticalRate
