@@ -102,6 +102,12 @@ public class Combatant : MonoBehaviour
         _stat.Stat[type] += value;
     }
 
+    public void RegenHP(float value)
+    {
+        // 체력의 최댓값을 넘지 않게 회복
+        _stat.CurrentHealth = Mathf.Min(_stat.CurrentHealth + value, _stat.Stat[EStatType.HP]);
+    }
+
     private void Awake()
     {
         _stat = GetComponent<CombatantStat>();

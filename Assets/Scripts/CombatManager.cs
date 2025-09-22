@@ -44,19 +44,21 @@ public class CombatManager : SingletonBehavior<CombatManager>
             Destroy(monster.gameObject);
         }
         _battleGround.SetActive(false);
+        PassiveBus.Publish(EPassiveTriggerType.OnBattleEnd);
     }
 
     public void ProcessPlayerAttack(EDamageType damageType, float damage, float aocDamage)
     {
         if (_monsters.Count > 0 && damage > 0)
         {
+            PassiveBus.Publish(EPassiveTriggerType.OnPlayerAttack);
             _monsters.First().TakeDamage(damageType, damage);
         }
 
         if (aocDamage > 0)
         {
             foreach (var monster in _monsters)
-            {
+            { 
                 monster.TakeDamage(EDamageType.Attack, aocDamage);
             }
         }
@@ -70,7 +72,7 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
         if (_player.IsDead)
         {
-            GameManager.Instance.OnBattleEnd(false);
+            ProcessDeadPlayer();
         }
     }
 
@@ -105,6 +107,17 @@ public class CombatManager : SingletonBehavior<CombatManager>
             _monsters.Add(monster);
             monster.ProcessAttack += ProcessMonsterAttack;
             monster.StartAttack();
+        }
+    }
+
+    private void ProcessDeadPlayer()
+    {
+        PassiveBus.Publish(EPassiveTriggerType.OnPlayerDeath);
+
+        // Passive 처리가 끝났는데도 여전히 죽어있다면 
+        if (_player.IsDead)
+        {
+            GameManager.Instance.OnBattleEnd(false);
         }
     }
     

@@ -11,21 +11,7 @@ public class Player : Combatant
     private void Start()
     {
         _passives = new List<IPassive>();
-        var hpIncrease = new OnMonsterDeathGetMaxHpPassive();
-        _passives.Add(hpIncrease);
-        hpIncrease.Activate(this);
-
-        var tDropEquipment = new OnMonsterDeathTimeDropEquipmentPassive();
-        _passives.Add(tDropEquipment);
-        tDropEquipment.Activate(this);
-
-        var cDropEquipment = new OnMonsterDeathCountDropEquipmentPassive();
-        _passives.Add(cDropEquipment);
-        cDropEquipment.Activate(this);
-
-        var doubledice = new OnDiceDoubleGetRandomStatPassive();
-        _passives.Add(doubledice);
-        doubledice.Activate(this);
+        RegisterPassive();   
     }
     
     public void SetEquipment(Equipment equipment)
@@ -43,6 +29,30 @@ public class Player : Combatant
     public void ReCalculateEquipmentStats()
     {
         _stat.ReCalculateEquipmentStats();
+    }
+
+    private void RegisterPassive()
+    {
+        // var hpIncrease = new OnMonsterDeathGetMaxHpPassive();
+        // _passives.Add(hpIncrease);
+        // hpIncrease.Activate(this);
+        
+        // var doubleDice = new OnDiceDoubleGetRandomStatPassive();
+        // _passives.Add(doubleDice);
+        // doubleDice.Activate(this);
+        
+        // var tDropEquipment = new OnMonsterDeathTimeDropEquipmentPassive();
+        // _passives.Add(tDropEquipment);
+        // tDropEquipment.Activate(this);
+
+        var revive = new OnPlayerDeathRevivePlayer();
+        _passives.Add(revive);
+        revive.Activate(this);
+
+        // var cDropEquipment = new OnMonsterDeathCountDropEquipmentPassive();
+        // _passives.Add(cDropEquipment);
+        // cDropEquipment.Activate(this);
+
     }
 }
     
