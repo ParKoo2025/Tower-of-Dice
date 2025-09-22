@@ -23,7 +23,6 @@ public class TileManager : SingletonBehavior<TileManager>
 
     public void MovePlayer(int moveCount)
     {
-        print(_tiles.Count);
         int nxt = (_playerPosition + moveCount) % _tiles.Count;
         StartCoroutine(MovePlayer(_playerPosition, nxt));
     }
@@ -36,8 +35,6 @@ public class TileManager : SingletonBehavior<TileManager>
     public void ResetPlayerPosition()
     {
         _player.transform.SetParent(_tiles[_playerPosition].transform, false);
-
-
         _player.transform.localScale = new Vector3(5f, 5f, 5f);
         if (_playerPosition > 10 && _playerPosition <= 30)
             _player.transform.GetChild(0).transform.localScale = new Vector3(-1f, 1f, 1f);

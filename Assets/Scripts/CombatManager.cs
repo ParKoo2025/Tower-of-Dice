@@ -34,17 +34,17 @@ public class CombatManager : SingletonBehavior<CombatManager>
     }
 
     public void EndBattle()
-    {
+    { 
         _progressCombat = false;
         
         _player.StopAttack();
+        _player.SetHpControllerActive(false);
         foreach (var monster in _monsters)
         {
             monster.StopAttack();
             Destroy(monster.gameObject);
         }
         _battleGround.SetActive(false);
-        PassiveBus.Publish(EPassiveTriggerType.OnBattleEnd);
     }
 
     public void ProcessPlayerAttack(EDamageType damageType, float damage, float aocDamage)

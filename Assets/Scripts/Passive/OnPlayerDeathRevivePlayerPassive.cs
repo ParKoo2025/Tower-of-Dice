@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class OnPlayerDeathRevivePlayer : IPassive
+public class OnPlayerDeathRevivePlayerPassive : IPassive
 {
     private bool _isUse;
     private Combatant _owner;

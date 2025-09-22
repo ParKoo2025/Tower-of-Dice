@@ -30,6 +30,11 @@ public class Player : Combatant
     {
         _stat.ReCalculateEquipmentStats();
     }
+    
+    public void SetHpControllerActive(bool isActive) 
+    {
+        _hpController.gameObject.SetActive(isActive);
+    }
 
     private void RegisterPassive()
     {
@@ -45,9 +50,17 @@ public class Player : Combatant
         // _passives.Add(tDropEquipment);
         // tDropEquipment.Activate(this);
 
-        var revive = new OnPlayerDeathRevivePlayer();
+        var revive = new OnPlayerDeathRevivePlayerPassive();
         _passives.Add(revive);
         revive.Activate(this);
+
+        var regenHp = new OnBattleEndRegenHPPassive();
+        _passives.Add(regenHp);
+        regenHp.Activate(this);
+
+        var getAtkSpd = new GetAttackSPDPassive();
+        _passives.Add(getAtkSpd);
+        getAtkSpd.Activate(this);
 
         // var cDropEquipment = new OnMonsterDeathCountDropEquipmentPassive();
         // _passives.Add(cDropEquipment);

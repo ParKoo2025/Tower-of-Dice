@@ -25,7 +25,7 @@ public class Combatant : MonoBehaviour
         _hpController.gameObject.SetActive(true);
         _isAttacking = true;
 
-        _animator.speed = 1f / _stat.Stat[EStatType.ATK_SPD] / 2f;
+        _animator.speed = _stat.Stat[EStatType.ATK_SPD] / 2f;
         _hpController.SetAttackSpeed(0f, 1f);
 
         _animator.Play("WAIT");
@@ -92,20 +92,18 @@ public class Combatant : MonoBehaviour
         ProcessAttack = null;
         
         _animator.speed = 1f;
-        
-        _hpController.gameObject.SetActive(false);
         _animator.Play("IDLE");
     }
 
     public void AddStat(EStatType type, float value)
     {
         _stat.Stat[type] += value;
+        print(1 / _stat.Stat[EStatType.ATK_SPD] / 2f);
     }
 
     public void RegenHP(float value)
     {
-        // 체력의 최댓값을 넘지 않게 회복
-        _stat.CurrentHealth = Mathf.Min(_stat.CurrentHealth + value, _stat.Stat[EStatType.HP]);
+        ChangeHealth(value);
     }
 
     private void Awake()
@@ -136,7 +134,7 @@ public class Combatant : MonoBehaviour
         var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         _hpController.SetAttackSpeed(stateInfo.normalizedTime % 1.0f, 1f);
 
-        _animator.speed = 1f / _stat.Stat[EStatType.ATK_SPD] / 2f;
+        _animator.speed = _stat.Stat[EStatType.ATK_SPD] / 2f;
     }
 
     private void ChangeHealth(float delta)

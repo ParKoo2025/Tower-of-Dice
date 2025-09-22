@@ -34,7 +34,8 @@ public class GameManager : SingletonBehavior<GameManager>
     public void OnBattleEnd(bool isPlayerWin)
     {
         GameState = EGameState.EndEvent;
-        
+        PassiveBus.Publish(EPassiveTriggerType.OnBattleEnd);
+
         if (isPlayerWin)
             OnPlayerBattleWin();
         else
