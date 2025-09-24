@@ -17,6 +17,15 @@ public enum EEquipments
 {
     ATK_DMG_Weapon,
     CRT_DMG_Weapon,
+    DEF_Boots,
+    DEF_Armor,
+    DEF_Helmet,
+    HP_Boots,
+    HP_Armor,
+    HP_Helmet,
+    EVA_Boots,
+    EVA_Armor,
+    EVA_Helmet,
     Size
 }
 

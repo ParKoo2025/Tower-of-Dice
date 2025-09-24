@@ -464,6 +464,33 @@ MonoBehaviour:
       Weight: 1
     - Id: 1
       Weight: 1
+  - Type: 1
+    TypeWeight: 1
+    SubKinds:
+    - Id: 4
+      Weight: 1
+    - Id: 7
+      Weight: 1
+    - Id: 10
+      Weight: 1
+  - Type: 2
+    TypeWeight: 1
+    SubKinds:
+    - Id: 3
+      Weight: 1
+    - Id: 6
+      Weight: 1
+    - Id: 9
+      Weight: 1
+  - Type: 3
+    TypeWeight: 1
+    SubKinds:
+    - Id: 2
+      Weight: 1
+    - Id: 5
+      Weight: 1
+    - Id: 8
+      Weight: 1
   _canvas: {fileID: 425254335}
 --- !u!4 &234712071
 Transform:
@@ -539,6 +566,33 @@ MonoBehaviour:
   - _equipmentName: 1
     _statType: 7
     _value: 100
+  - _equipmentName: 2
+    _statType: 8
+    _value: 3
+  - _equipmentName: 3
+    _statType: 8
+    _value: 3
+  - _equipmentName: 4
+    _statType: 8
+    _value: 3
+  - _equipmentName: 5
+    _statType: 0
+    _value: 30
+  - _equipmentName: 6
+    _statType: 0
+    _value: 30
+  - _equipmentName: 7
+    _statType: 0
+    _value: 30
+  - _equipmentName: 8
+    _statType: 9
+    _value: 10
+  - _equipmentName: 9
+    _statType: 9
+    _value: 10
+  - _equipmentName: 10
+    _statType: 9
+    _value: 10
 --- !u!1 &293263572
 GameObject:
   m_ObjectHideFlags: 0

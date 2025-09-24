@@ -1,14 +1,13 @@
 fileFormatVersion: 2
-guid: b1873796bc6a04d0e851a8b13585448b
-AssetOrigin:
-  serializedVersion: 1
-  productId: 188715
-  packageName: 2D Pixel Unit Maker - SPUM
-  packageVersion: 1.7.7
-  assetPath: Assets/SPUM/Resources/Addons/Ver300/0_Unit/0_Sprite/4_Helmet/New_Helmet_03.png
-  uploadId: 713980
+guid: f4ab7b65e34e22242a3e9388f9d15325
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 1300228907016722774
+    second: Right
+  - first:
+      213: 7509469182213787861
+    second: Left
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,11 +49,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.421875, y: 0.53125}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -128,7 +127,51 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Right
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 13
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6591d615d475b0210800000000000000
+      internalID: 1300228907016722774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Left
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 13
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d098913f6ef63860800000000000000
+      internalID: 7509469182213787861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -142,7 +185,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Left: 7509469182213787861
+      Right: 1300228907016722774
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
