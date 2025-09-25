@@ -49,10 +49,10 @@ public class CombatManager : SingletonBehavior<CombatManager>
 
     public void ProcessPlayerAttack(EDamageType damageType, float damage, float aocDamage)
     {
-        if (_monsters.Count > 0 && damage > 0)
+        if (damage > 0)
         {
-            PassiveBus.Publish(EPassiveTriggerType.OnPlayerAttack);
             _monsters.First().TakeDamage(damageType, damage);
+            PassiveBus.Publish(EPassiveTriggerType.OnPlayerAttack);
         }
 
         if (aocDamage > 0)
@@ -123,6 +123,8 @@ public class CombatManager : SingletonBehavior<CombatManager>
     
     private void ProcessDeadMonsters()
     {
+        if (_monsters.Count == 0) return;
+        
         List<Monster> monstersToRemove = new List<Monster>();
 
         foreach (var monster in _monsters)
