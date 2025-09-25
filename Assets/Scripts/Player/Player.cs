@@ -66,13 +66,21 @@ public class Player : Combatant
         // _passives.Add(tGetAtkSpd);
         // tGetAtkSpd.Activate(this);
 
-        var cAocDamage = new OnPlayerAttackCountAOCDamage();
-        _passives.Add(cAocDamage);
-        cAocDamage.Activate(this);
+        // var cAocDamage = new OnPlayerAttackCountAOCDamage();
+        // _passives.Add(cAocDamage);
+        // cAocDamage.Activate(this);
 
         // var cDropEquipment = new OnMonsterDeathCountDropEquipmentPassive();
         // _passives.Add(cDropEquipment);
         // cDropEquipment.Activate(this);
+
+        // var getAllStat = new GetAllStatPassive();
+        // _passives.Add(getAllStat);
+        // getAllStat.Activate(this);
+
+        var atkGetAtkSpd = new OnPlayerAttackGetAttackSPDPassive();
+        _passives.Add(atkGetAtkSpd);
+        atkGetAtkSpd.Activate(this);
 
     }
 }
