@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class OnBattleStartTimeGetAttackSPDPassive : IPassive
+public class OnBattleStartTimeGetATKSPDPassive : IPassive
 {
     private float _time = 5f;
     private float _amount = 0.5f;
@@ -9,7 +9,7 @@ public class OnBattleStartTimeGetAttackSPDPassive : IPassive
 
     private Coroutine _coWait;
     
-    public string Name { get; } = "OnBattleStartTimeGetAttackSPDPassive";
+    public string Name { get; } = "OnBattleStartTimeGetATKSPDPassive";
     
     public void Activate(Combatant owner)
     {

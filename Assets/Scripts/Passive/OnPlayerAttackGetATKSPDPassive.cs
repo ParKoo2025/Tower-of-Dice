@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class OnPlayerAttackGetAttackSPDPassive : IPassive
+public class OnPlayerAttackGetATKSPDPassive : IPassive
 {
     private float _amount = 0.1f;
     private int _count = 0;
     private Combatant _owner;
     
-    public string Name { get; } = "OnPlayerAttackGetAttackSPDPassive";
+    public string Name { get; } = "OnPlayerAttackGetATKSPDPassive";
     
     public void Activate(Combatant owner)
     {

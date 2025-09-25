@@ -78,7 +78,7 @@ public class Player : Combatant
         // _passives.Add(getAllStat);
         // getAllStat.Activate(this);
 
-        var atkGetAtkSpd = new OnPlayerAttackGetAttackSPDPassive();
+        var atkGetAtkSpd = new OnPlayerAttackGetATKSPDPassive();
         _passives.Add(atkGetAtkSpd);
         atkGetAtkSpd.Activate(this);
 

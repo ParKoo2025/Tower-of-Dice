@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class OnMonsterDeathGetMaxHpPassive : IPassive
+public class OnMonsterDeathGetHPPassive : IPassive
 {
     private float _amount = 10;
     private Combatant _owner;
     
-    public string Name { get; } = "OnMonsterDeathMaxHpIncreasePassive";
+    public string Name { get; } = "OnMonsterDeathGetHPPassive";
     public void Activate(Combatant owner)
     {
         PassiveBus.Subscribe(EPassiveTriggerType.OnMonsterDeath, OnMonsterDeath);
