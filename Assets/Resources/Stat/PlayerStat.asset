@@ -21,11 +21,11 @@ MonoBehaviour:
     - Name: HealthStealRate
       Value: 0
     - Name: AttackDamage
-      Value: 10
+      Value: 1
     - Name: AttackSpeed
       Value: 1
     - Name: AocDamage
-      Value: 1
+      Value: 0
     - Name: CriticalRate
       Value: 10
     - Name: CriticalMultiplier
