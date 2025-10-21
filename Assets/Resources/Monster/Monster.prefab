@@ -3679,7 +3679,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _basicStat: {fileID: 11400000, guid: 935bc401e59869b4f99e27e6802f5afb, type: 2}
-  _equipment: []
+  _equipped:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &623577105251579577
 GameObject:
   m_ObjectHideFlags: 0
@@ -4691,7 +4695,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.03125, y: 0.0625}
+  m_Size: {x: 0.125, y: 0.03125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -8986,7 +8990,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.03125, y: 0.0625}
+  m_Size: {x: 0.125, y: 0.03125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -11549,7 +11553,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.03125, y: 0.0625}
+  m_Size: {x: 0.125, y: 0.03125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -12616,7 +12620,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.03125, y: 0.0625}
+  m_Size: {x: 0.125, y: 0.03125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
